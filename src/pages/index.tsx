@@ -6,7 +6,7 @@ function HomePage() {
     { ssr: false }
   )
   return <div className='d-flex items-center justify-center w-ful'>
-    <div className='text-3xl font-bold :D'>Rastreie seu pet</div>
+    <div className='text-3xl font-bold .'>Rastreie seu pet</div>
     <Map />
   </div>
 }
