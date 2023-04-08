@@ -16,8 +16,8 @@ const plans = [
         value: false, description: 'Serviço de rastreamento por tempo limitado, porém a localização da coleira é fornecida a cada dez minutos.'
     },
     {
-        id: 2, name: 'Ouro', darkColor: '#7a5001',
-        color: '#e09813', value: '200', duration: '1 MÊS'
+        id: 2, name: 'Ouro', darkColor: '#F0C513',
+        color: '#FFDC26', value: '200', duration: '1 MÊS'
     },
     {
         id: 5, name: 'Platina', darkColor: '#0E908F',
@@ -76,7 +76,7 @@ function rgbToHex(rgb: { r: number; g: number; b: number }): string {
 
 const PlansPage: React.FC<Props> = ({ userName, onLogout, showingOptions = true }) => {
     return (
-        <div className='d-flex bg-[#4811A2] h-screen items-center justify-center w-full overflow-y-scroll'>
+        <div className='d-flex bg-white h-screen items-center justify-center w-full overflow-y-scroll'>
             {/* <div className='text-3xl font-bold .'>Rastreie seu pet</div> */}
             <HeaderMenu showingOptions={true} selectedOption='plans' />
             <div className="container mx-auto py-4  px-5">
