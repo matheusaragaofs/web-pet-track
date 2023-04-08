@@ -4,13 +4,14 @@ import { FiMenu, FiUser } from "react-icons/fi";
 interface Props {
     userName?: string,
     onLogout?: () => void
-    selectedOption?: 'my-collars' | 'meu-plano' | 'chat',
+    selectedOption?: 'my-collars' | 'meu-plano' | 'chat' | 'plans',
     showingOptions?: boolean
 }
 
 const options: { title: string, url: string }[] = [
     { title: 'minhas coleiras', url: 'my-collars' },
     { title: 'meu plano', url: 'meu-plano' },
+    { title: 'planos', url: 'plans' },
     { title: 'chat', url: 'chat' },
 ]
 

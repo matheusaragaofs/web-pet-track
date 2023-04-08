@@ -59,7 +59,7 @@ function rgbToHex(rgb: { r: number; g: number; b: number }): string {
 
 
 
-const MinhasColeirasPage: React.FC<Props> = ({ userName, onLogout, showingOptions = true }) => {
+const MyCollarsPage: React.FC<Props> = ({ userName, onLogout, showingOptions = true }) => {
     return (
         <div className='d-flex bg-[#4811A2] h-screen items-center justify-center w-full overflow-y-scroll'>
             {/* <div className='text-3xl font-bold .'>Rastreie seu pet</div> */}
@@ -98,4 +98,4 @@ const MinhasColeirasPage: React.FC<Props> = ({ userName, onLogout, showingOption
     );
 };
 
-export default MinhasColeirasPage;
+export default MyCollarsPage;
