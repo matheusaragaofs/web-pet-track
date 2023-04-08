@@ -47,7 +47,7 @@ const PlansPage: React.FC = () => {
                                     {plan.description ?
                                         <span className="text-white font-bold text-sm text-center p-2" > {plan.description} </span> : <>
                                             <span className="text-white font-bold text-lg text-center p-2 ">Rastreamento em tempo real</span>
-                                            <span className="text-white font-bold text-2xl ">1 Mês</span>
+                                            <span className="text-white font-bold text-2xl ">{plan.duration}</span>
                                         </>
                                     }
                                     {plan.value &&
