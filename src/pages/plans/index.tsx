@@ -1,13 +1,6 @@
 import HeaderMenu from "@/components/HeaderMenu";
-import { spawn } from "child_process";
 import Link from "next/link";
-import { FiEdit, FiEye } from "react-icons/fi";
 
-interface Props {
-    userName?: string,
-    onLogout?: () => void
-    showingOptions?: boolean
-}
 const plans = [
     {
         id: 1, name: 'Básico',
@@ -28,67 +21,21 @@ const plans = [
         color: '#7d3ce6', value: '1600', duration: '1 ANO'
     },
 ];
-interface ColorObject {
-    color: string;
-    darkColor: string;
-}
 
-function generateRandomColor(): ColorObject {
-    // Generate a random color in hexadecimal format
-    const randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
-
-    // Convert the color to RGB format
-    const rgbColor = hexToRgb(randomColor);
-
-    // Darken the color by reducing the RGB values
-    const darkRgbColor = {
-        r: Math.round(rgbColor.r * 0.5),
-        g: Math.round(rgbColor.g * 0.5),
-        b: Math.round(rgbColor.b * 0.5)
-    };
-
-    // Convert the dark color back to hexadecimal format
-    const darkColor = rgbToHex(darkRgbColor);
-
-    // Return the original color and the darker shade
-    return { color: randomColor, darkColor };
-}
-
-// Helper function to convert a hexadecimal color to RGB format
-function hexToRgb(hex: string) {
-    const r = parseInt(hex.slice(1, 3), 16);
-    const g = parseInt(hex.slice(3, 5), 16);
-    const b = parseInt(hex.slice(5, 7), 16);
-
-    return { r, g, b };
-}
-
-// Helper function to convert an RGB color to hexadecimal format
-function rgbToHex(rgb: { r: number; g: number; b: number }): string {
-    const rHex = rgb.r.toString(16).padStart(2, '0');
-    const gHex = rgb.g.toString(16).padStart(2, '0');
-    const bHex = rgb.b.toString(16).padStart(2, '0');
-
-    return '#' + rHex + gHex + bHex;
-}
-
-
-
-const PlansPage: React.FC<Props> = ({ userName, onLogout, showingOptions = true }) => {
+const PlansPage: React.FC = () => {
     return (
         <div className='d-flex bg-white h-screen items-center justify-center w-full overflow-y-scroll'>
             {/* <div className='text-3xl font-bold .'>Rastreie seu pet</div> */}
             <HeaderMenu showingOptions={true} selectedOption='plans' />
             <div className="container mx-auto py-4  px-5">
-                <h1 className="text-3xl font-bold mb-4 text-white">Planos</h1>
+                <h1 className="text-3xl font-bold mb-4 text-[#4811A2]">Planos</h1>
                 <div className="gap-4 flex justify-evenly items-center flex-wrap  w-full">
                     {plans.map((plan) => {
-                        const { color, darkColor } = generateRandomColor()
                         return (
                             <div
                                 key={plan.id}
                                 style={{ backgroundColor: plan.color }}
-                                className="bg-white rounded-lg relative shadow-md h-[400px] w-[260px]  hover:shadow-lg transition duration-300"
+                                className="bg-white rounded-3xl relative shadow-md h-[400px] w-[260px]  hover:shadow-lg transition duration-300"
                             >
                                 <div className="flex justify-evenly items-center flex-col h-2/3 ">
                                     <h1 className="text-4xl font-bold text-white">{plan.name}</h1>
@@ -96,7 +43,7 @@ const PlansPage: React.FC<Props> = ({ userName, onLogout, showingOptions = true 
                                 </div>
                                 <div
                                     style={{ backgroundColor: plan.darkColor }}
-                                    className='flex flex-col h-40 justify-between items-center px-5 bottom-0 absolute w-full rounded-lg'>
+                                    className='flex flex-col h-40 justify-between items-center px-5 bottom-0 absolute w-full rounded-3xl'>
                                     {plan.description ?
                                         <span className="text-white font-bold text-sm text-center p-2" > {plan.description} </span> : <>
                                             <span className="text-white font-bold text-lg text-center p-2 ">Rastreamento em tempo real</span>
