@@ -1,13 +1,34 @@
 import HeaderMenu from '@/components/HeaderMenu'
+import { AppDispatch } from '@/redux/store'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
+import { useEffect } from 'react'
 import { FiArrowLeft } from 'react-icons/fi'
+import { useDispatch } from 'react-redux'
+import { CollarsData, fetchCollarsData } from './redux'
 
-function HomePage() {
+const CollarPage = () => {
     const Map = dynamic(
         () => import('../../components/Map'),
         { ssr: false }
     )
+
+    const dispatch = useDispatch<AppDispatch>();
+    const { data, error, status } = CollarsData();
+    useEffect(() => {
+        dispatch(fetchCollarsData());
+    }, [dispatch]);
+
+    if (status === 'failed') {
+        return <div>Error: {error}</div>;
+    }
+
+
+    if (data?.result) {
+        console.log('data:', data?.result[2]?.location?.coordinates as any)
+    }
+
+
     return <div className='d-flex bg-[#4811A2] h-screen items-center justify-center w-full overflow-y-scroll'>
         {/* <div className='text-3xl font-bold .'>Rastreie seu pet</div> */}
         <HeaderMenu showingOptions={false} />
@@ -24,4 +45,4 @@ function HomePage() {
     </div>
 }
 
-export default HomePage
+export default CollarPage
