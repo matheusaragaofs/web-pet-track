@@ -7,7 +7,10 @@ type Collar = {
 }
 
 interface CollarsState {
-    data: Collar[];
+    // data: Collar[];
+    data: {
+        result: any
+    };
     status: 'idle' | 'loading' | 'succeeded' | 'failed';
     error: string | null;
     collar: Collar;
@@ -38,7 +41,7 @@ export const fetchCollar = async ({ id }: { id?: number }) => {
 const collarsSlice = createSlice({
     name: 'collars',
     initialState: {
-        data: [],
+        data: {},
         status: 'idle',
         error: null,
         collar: {} as Collar,
@@ -51,7 +54,7 @@ const collarsSlice = createSlice({
             })
             .addCase(
                 fetchCollarsData.fulfilled,
-                (state: CollarsState, action: PayloadAction<Collar[]>) => {
+                (state: CollarsState, action: PayloadAction<any>) => {
                     state.status = 'succeeded';
                     state.data = action.payload;
                 },

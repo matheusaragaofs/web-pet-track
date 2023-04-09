@@ -22,10 +22,9 @@ const CollarPage = () => {
     if (status === 'failed') {
         return <div>Error: {error}</div>;
     }
+    if (status === 'loading' && !data?.result) {
+        return <div>Loading</div>;
 
-
-    if (data?.result) {
-        console.log('data:', data?.result[2]?.location?.coordinates as any)
     }
 
 
@@ -40,7 +39,7 @@ const CollarPage = () => {
                 </Link>
                 <span className='bg-[#E8E8E8] px-10 m-0 py-2 rounded-md text-[#4811A2] font-bold text-lg '> Polly</span>
             </div>
-            <Map />
+            <Map coordinates={data?.result} />
         </div>
     </div>
 }
