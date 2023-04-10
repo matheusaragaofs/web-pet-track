@@ -9,7 +9,7 @@ import { CollarsData, fetchCollarsData } from './redux'
 
 const CollarPage = () => {
     const Map = dynamic(
-        () => import('../../components/Map'),
+        () => import('../../components/Map/MapTwo'),
         { ssr: false }
     )
 
@@ -39,7 +39,7 @@ const CollarPage = () => {
                 </Link>
                 <span className='bg-[#E8E8E8] px-10 m-0 py-2 rounded-md text-[#4811A2] font-bold text-lg '> Polly</span>
             </div>
-            <Map coordinates={data?.result} />
+            <Map />
         </div>
     </div>
 }
