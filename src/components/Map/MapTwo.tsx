@@ -35,14 +35,19 @@ const MapTwo = () => {
                 // style={{ height: "100vh", width: "100%", padding: 0 }}
                 whenReady={(map: void) => setMap(map as any) as void}
             >
-                <RoutingMachine
+                {/* <RoutingMachine
                     position={'topright'}
                     start={start}
                     end={end}
                     color={'#2ef900'}
-                />
+                /> */}
                 <Marker icon={icon} position={viriato as any}>
                     <Popup offset={[2, 4]}>
+                        Seu pet está aqui <br /> Venha buscar antes que alguem o sequestre :).
+                    </Popup>
+                </Marker>
+                <Marker icon={icon} position={cin as any}>
+                <Popup offset={[2, 4]}>
                         Seu pet está aqui <br /> Venha buscar antes que alguem o sequestre :).
                     </Popup>
                 </Marker>

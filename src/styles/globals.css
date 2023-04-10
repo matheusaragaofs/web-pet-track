@@ -1,7 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+.leaflet-routing-container,.leaflet-marker-icon, .leaflet-routing-container-hide {
+  display: none;
+}
 * {
   box-sizing: border-box;
   padding: 0;
