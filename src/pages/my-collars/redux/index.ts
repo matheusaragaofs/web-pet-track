@@ -12,21 +12,20 @@ interface CollarsState {
         result: any
     };
     status: 'idle' | 'loading' | 'succeeded' | 'failed';
-    error: string | null;
+    error: boolean | null;
     collar: Collar;
 }
 
 export const fetchCollarsData = createAsyncThunk<Collar[]>(
     'collars/fetchCollarsData',
     async () => {
-        
-        const response = await fetch(`${baseUrl}/data?qty=1`, { headers });
-
-        if (!response.ok) {
+        try {
+            const response = await fetch(`${baseUrl}/data?qty=1`, { headers });
+            const data = await response.json();
+            return data.result[0].location.coordinates
+        } catch (error) {
             throw new Error('Failed to fetch collars data');
         }
-        const data = await response.json();
-        return data.result[0].location.coordinates
     },
 );
 
@@ -63,7 +62,7 @@ const collarsSlice = createSlice({
                 fetchCollarsData.rejected,
                 (state: CollarsState, action: PayloadAction<string>) => {
                     state.status = 'failed';
-                    state.error = action.payload;
+                    state.error = true;
                 },
             );
     },

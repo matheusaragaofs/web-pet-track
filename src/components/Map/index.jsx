@@ -1,5 +1,7 @@
 import { useRef, useEffect, useState } from 'react'
 import * as tt from '@tomtom-international/web-sdk-maps'
+import { FiRefreshCcw } from "react-icons/fi";
+
 import * as ttapi from '@tomtom-international/web-sdk-services'
 import '@tomtom-international/web-sdk-maps/dist/maps.css'
 import _ from 'lodash'
@@ -8,12 +10,15 @@ import { CollarsData, fetchCollarsData } from '../../pages/my-collars/redux'
 import Link from 'next/link'
 import HeaderMenu from '../HeaderMenu/index'
 import { FiArrowLeft } from 'react-icons/fi'
+import { toast } from 'react-toastify'
 
 const MapPage = () => {
 
   const dispatch = useDispatch();
   const { data: petLgLat, error, status } = CollarsData();
   const [loadedMap, setLoadedMap] = useState(false)
+  const [userLngLat, setUserLngLat] = useState(null)
+  const defaultLngLat = [-34.900002, -8.050000]
   function formatDistanceLength(lengthInMeters) {
     if (lengthInMeters >= 1000) {
       const lengthInKm = Math.round(lengthInMeters / 1000 * 10) / 10;
@@ -42,14 +47,12 @@ const MapPage = () => {
 
   const mapElement = useRef()
   const [map, setMap] = useState({})
-  const [longitude, setLongitude] = useState(-34.9533899)
-  const [latitude, setLatitude] = useState(-8.0554378)
 
   const [routeInfo, setRouteInfo] = useState({})
 
-  const resiLatLog = [-8.1187577, -34.9102159]
   const drawRoute = (geoJson, map) => {
-    if (map && map?.getLayer('route')) {
+    if (!loadedMap) return
+    if (map?.getLayer('route')) {
       map?.removeLayer('route')
       map?.removeSource('route')
     }
@@ -84,16 +87,12 @@ const MapPage = () => {
     marker.setPopup(popup).togglePopup()
 
   }
-  // if ("geolocation" in navigator) {
-  //   navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
-  // } else {
-  //   console.log("Geolocation API is not supported");
-  // }
+
 
   function successCallback(position) {
     const latitude = position.coords.latitude;
     const longitude = position.coords.longitude;
-    console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
+    setUserLngLat([longitude, latitude])
   }
 
   function errorCallback(error) {
@@ -114,14 +113,46 @@ const MapPage = () => {
     console.error(message);
   }
 
-  // useEffect(() => {
-  //   if ("geolocation" in navigator) {
-  //     navigator.geolocation.getCurrentPosition(successCallback, errorCallback, { maximumAge: 60000, timeout: 5000, enableHighAccuracy: true });
-  //   } else {
-  //     console.log("Geolocation API is not supported");
-  //   }
+  const getUserLocation = () => {
 
-  // }, [])
+    try {
+      navigator.geolocation.getCurrentPosition(successCallback, errorCallback, { maximumAge: 60000, timeout: 5000, enableHighAccuracy: true });
+      toast("Sucesso ao recuperar localização do usuário!", { type: 'success' });
+
+    } catch (err) {
+      toast("Erro ao tentar recuperar localização do usuário! Tente outro navegador. ", { type: 'error' });
+    }
+  }
+
+
+  const recalculateRoutes = ({ startLngLat, endLngLat }) => {
+    const locations =
+      [
+        {
+          "lng": startLngLat[0],
+          "lat": startLngLat[1]
+        },
+        {
+          "lng": endLngLat[0],
+          "lat": endLngLat[1]
+        }
+      ]
+
+    ttapi.services
+      .calculateRoute({
+        key: process.env.NEXT_PUBLIC_REACT_APP_TOM_TOM_API_KEY,
+        locations
+      })
+      .then((routeData) => {
+        const { lengthInMeters, travelTimeInSeconds } = routeData.routes[0].summary
+        setRouteInfo({
+          distance: formatDistanceLength(lengthInMeters),
+          travelTime: formatTravelTime(travelTimeInSeconds)
+        })
+        const geoJson = routeData.toGeoJson()
+        drawRoute(geoJson, map)
+      })
+  }
 
 
 
@@ -134,104 +165,38 @@ const MapPage = () => {
     setMap(map)
     dispatch(fetchCollarsData());
 
-    // const addMarker = () => {
-    //   const popupOffset = {
-    //     bottom: [0, -25]
-    //   }
-    //   const popup = new tt.Popup({ offset: popupOffset }).setHTML('Esse é você!')
-    //   const popup2 = new tt.Popup({ offset: popupOffset }).setHTML('Seu pet está aqui!')
-    //   const element = document.createElement('div')
-    //   const element2 = document.createElement('div')
-    //   element.className = 'marker'
-    //   element2.className = 'marker'
 
-    //   const marker = new tt.Marker({
-    //     draggable: false,
-    //     element: element,
-    //   })
-    //     .setLngLat([longitude, latitude])
-    //     .addTo(map)
-
-    //   const marker2 = new tt.Marker({
-    //     draggable: false,
-    //     element: element2,
-    //   })
-    //     .setLngLat([resiLatLog[1], resiLatLog[0]])
-    //     .addTo(map)
-
-
-    //   marker.setPopup(popup).togglePopup()
-    //   marker2.setPopup(popup2).togglePopup()
-
-    // }
-    // addMarker()
-    const recalculateRoutes = () => {
-      const teste =
-        [
-          {
-            "lng": petLgLat[0],
-            "lat": petLgLat[1]
-          },
-          {
-            "lng": resiLatLog[1],
-            "lat": resiLatLog[0]
-          }
-        ]
-
-      ttapi.services
-        .calculateRoute({
-          key: process.env.NEXT_PUBLIC_REACT_APP_TOM_TOM_API_KEY,
-          locations: teste,
-        })
-        .then((routeData) => {
-          const { lengthInMeters, travelTimeInSeconds } = routeData.routes[0].summary
-          setRouteInfo({
-            distance: formatDistanceLength(lengthInMeters),
-            travelTime: formatTravelTime(travelTimeInSeconds)
-          })
-          const geoJson = routeData.toGeoJson()
-          drawRoute(geoJson, map)
-        })
-    }
     map.on('load', () => setLoadedMap(true))
-    //   if (!_.isEmpty(map)) {
-
-    //     map.on('load', function () {
-    //       console.log('CARREGOU O MAP')
-    //       // if (!_.isEmpty(petLgLat)) {
-    //       //   dispatch(fetchCollarsData());
-    //       //   map.setCenter(petLgLat)
-    //       //   // addMarker({ lngLat: petLgLat, map, popupMessage: 'Seu pet está aqui' })
-    //       //   // recalculateRoutes()
-    //       // }
-
-
-    //     })
-    //   }
-    // map.on('load', function () {
-    //   if (!_.isEmpty(petLgLat) ) {
-    //     dispatch(fetchCollarsData());
-    //     map.setCenter(petLgLat)
-    //     // addMarker({ lngLat: petLgLat, map, popupMessage: 'Seu pet está aqui' })
-    //     // recalculateRoutes()
-    //   }
-    // });
 
     return () => map?.remove()
   }, [])
 
   useEffect(() => {
+
     if (loadedMap && !_.isEmpty(petLgLat)) {
       map.setCenter(petLgLat)
       addMarker({ lngLat: petLgLat, map, popupMessage: 'Seu pet está aqui' })
-      //   // recalculateRoutes()
-      // }
+    }
 
+  }, [petLgLat, loadedMap])
+
+  useEffect(() => {
+    if (loadedMap && error) {
+      map.setCenter(defaultLngLat)
+      toast('Infelizmente não conseguimos localizar o pet', { type: 'error' })
+      map.setZoom(5)
+    }
+
+  }, [loadedMap, error])
+
+  useEffect(() => {
+    if (userLngLat) {
+      addMarker({ lngLat: userLngLat, map, popupMessage: 'Você está aqui!' })
+      recalculateRoutes({ startLngLat: petLgLat, endLngLat: userLngLat })
 
     }
 
-
-  }, [petLgLat, loadedMap])
+  }, [userLngLat])
 
 
   return (
@@ -247,8 +212,17 @@ const MapPage = () => {
         </div>
         <div className="map-container">
           <div ref={mapElement} className="map" />
+          <span className='my-6 bg-[#E8E8E8] px-10 m-0 py-2 rounded-3xl flex justify-center items-center space-x-2 text-[#4811A2] font-bold text-lg '>
+            <p>
+
+              minha localização
+            </p>
+            <button onClick={() => getUserLocation()}>
+              <FiRefreshCcw /></button>
+          </span>
+
           {!_.isEmpty(routeInfo) &&
-            <span className='bg-[#E8E8E8] px-10 m-0 py-2 rounded-bl-md rounded-br-md text-[#4811A2] font-bold text-lg '>
+            <span className='bg-[#E8E8E8] px-10 m-0 py-2 rounded-2xl text-[#4811A2] font-bold text-lg '>
               <div>Seu pet está há {routeInfo.distance} de você</div>
               <div>Para chegar até ele levará {routeInfo.travelTime}</div>
             </span>
