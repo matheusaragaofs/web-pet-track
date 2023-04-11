@@ -18,6 +18,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/components/Map/TomTom.jsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/components/Map/TomTom.jsx", "src/pages/my-collars/teste.jsx", "src/pages/my-collars/teste.jsx"],
   "exclude": ["node_modules"]
 }

@@ -1,5 +1,4 @@
 import HeaderMenu from '@/components/HeaderMenu'
-import dynamic from 'next/dynamic'
 
 function HomePage() {
 

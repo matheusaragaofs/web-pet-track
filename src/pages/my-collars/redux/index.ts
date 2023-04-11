@@ -20,13 +20,13 @@ export const fetchCollarsData = createAsyncThunk<Collar[]>(
     'collars/fetchCollarsData',
     async () => {
         
-        const response = await fetch(`${baseUrl}/data?qty=3`, { headers });
+        const response = await fetch(`${baseUrl}/data?qty=1`, { headers });
 
         if (!response.ok) {
             throw new Error('Failed to fetch collars data');
         }
         const data = await response.json();
-        return data;
+        return data.result[0].location.coordinates
     },
 );
 

@@ -46,9 +46,9 @@ const HeaderMenu: React.FC<Props> = ({ userName, onLogout, showingOptions = true
             <nav className="px-2 pt-2 pb-4 sm:flex sm:p-0">
                 {showingOptions &&
                     <>
-                        {options?.map(({ title, url }) => (
+                        {options?.map(({ title, url }, i) => (
 
-                            <Link href={url}>
+                            <Link key={i} href={url}>
                                 <span
                                     style={{ color: selectedOption === url ? "#4811A2" : 'black' }}
                                     className="block px-2 py-1 font-semibold rounded hover:text-purple-700 sm:mt-0 sm:ml-2">
