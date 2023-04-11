@@ -9,7 +9,7 @@ import { CollarsData, fetchCollarsData } from './redux'
 
 const CollarPage = () => {
     const Map = dynamic(
-        () => import('../../components/Map/MapTwo'),
+        () => import('../../components/Map/TomTom.jsx'),
         { ssr: false }
     )
 
