@@ -9,7 +9,8 @@ import { useDispatch } from 'react-redux'
 import { CollarsData, fetchCollarsData } from '../../pages/my-collars/redux'
 import Link from 'next/link'
 import HeaderMenu from '../HeaderMenu/index'
-import { FiArrowLeft } from 'react-icons/fi'
+import { FiArrowLeft, FiUser } from 'react-icons/fi'
+import { MdPets } from 'react-icons/md'
 import { toast } from 'react-toastify'
 
 const MapPage = () => {
@@ -64,8 +65,8 @@ const MapPage = () => {
         data: geoJson
       },
       paint: {
-        'line-color': '#4a90e2',
-        'line-width': 6
+        'line-color': '#4811A2',
+        'line-width': 3
 
       }
     })
@@ -212,17 +213,32 @@ const MapPage = () => {
         </div>
         <div className="map-container">
           <div ref={mapElement} className="map" />
-          <span className='my-6 bg-[#E8E8E8] px-10 m-0 py-2 rounded-3xl flex justify-center items-center space-x-2 text-[#4811A2] font-bold text-lg '>
+          <span className='my-6 bg-[#E8E8E8] px-10 m-0 py-2 rounded-3xl flex justify-center items-center space-x-5 text-[#4811A2] font-bold text-lg '>
             <p>
 
               minha localização
             </p>
             <button onClick={() => getUserLocation()}>
               <FiRefreshCcw /></button>
+            {petLgLat &&
+              <span
+                style={{ justifyContent: userLngLat ? 'space-between' : 'center' }}
+                className=' bg-[#E8E8E8]  py-2 rounded-3xl flex space-x-4 items-center text-[#4811A2] font-bold text-lg '>
+                {userLngLat &&
+                  <button onClick={() => map.setCenter(userLngLat)}>
+                    <FiUser />
+                  </button>
+                }
+                <button onClick={() => map.setCenter(petLgLat)}>
+                  <MdPets />
+                </button>
+              </span>
+            }
           </span>
 
+
           {!_.isEmpty(routeInfo) &&
-            <span className='bg-[#E8E8E8] px-10 m-0 py-2 rounded-2xl text-[#4811A2] font-bold text-lg '>
+            <span className='bg-[#E8E8E8] p-5 m-0 rounded-2xl text-[#4811A2] font-bold text-lg  text-center'>
               <div>Seu pet está há {routeInfo.distance} de você</div>
               <div>Para chegar até ele levará {routeInfo.travelTime}</div>
             </span>
