@@ -15,6 +15,7 @@ import { toast } from 'react-toastify'
 
 const MapPage = () => {
   const [userLngLat, setUserLngLat] = useState(null)
+  const [mapMarkers, setMapMarkers] = useState([])
 
   const getLatLongFromCep = async (cep) => {
     try {
@@ -85,7 +86,7 @@ const MapPage = () => {
       }
     })
   }
-  const addMarker = ({ lngLat, map, popupMessage }) => {
+  const addMarker = ({ lngLat, map, popupMessage, draggable = false, type }) => {
     const element = document.createElement('div')
     element.className = 'marker'
     const popupOffset = {
@@ -93,40 +94,26 @@ const MapPage = () => {
     }
     const popup = new tt.Popup({ offset: popupOffset }).setHTML(popupMessage)
     const marker = new tt.Marker({
-      draggable: false,
+      draggable,
       element
     }).setLngLat(lngLat)
       .addTo(map)
 
+    if (draggable) {
+      marker.on('dragend', () => {
+        const lngLat = marker.getLngLat()
+        console.log('lngLat:', lngLat)
+        setUserLngLat([lngLat.lng, lngLat.lat])
+      })
+    }
+    setMapMarkers(() => [...mapMarkers, { type, marker }])
 
     marker.setPopup(popup).togglePopup()
 
   }
 
   console.log('userLngLat:', userLngLat)
-  function successCallback(position) {
-    const latitude = position.coords.latitude;
-    const longitude = position.coords.longitude;
-    setUserLngLat([longitude, latitude])
-  }
 
-  function errorCallback(error) {
-    let message = "";
-    switch (error.code) {
-      case 1:
-        message = "Permission denied. Please allow location access.";
-        break;
-      case 2:
-        message = "Position unavailable. Please check your location settings.";
-        break;
-      case 3:
-        message = "Timeout. Please try again later or check your network connection.";
-        break;
-      default:
-        message = "An unknown error occurred.";
-    }
-    console.error(message);
-  }
 
   const getUserLocation = async () => {
     await getLatLongFromCep('51160220')
@@ -134,6 +121,14 @@ const MapPage = () => {
 
 
   const recalculateRoutes = ({ startLngLat, endLngLat }) => {
+    let markersCopy = mapMarkers
+    const lastUserMarker = markersCopy[markersCopy.length - 1]
+    if (lastUserMarker.type === 'user') {
+      const m  = markersCopy.pop()
+      m.marker.remove()
+      setMapMarkers(markersCopy)
+    }
+    addMarker({ lngLat: userLngLat, map, popupMessage: 'Você está aqui!', draggable: true, type: 'user' })
     const locations =
       [
         {
@@ -183,7 +178,7 @@ const MapPage = () => {
 
     if (loadedMap && !_.isEmpty(petLgLat)) {
       map.setCenter(petLgLat)
-      addMarker({ lngLat: petLgLat, map, popupMessage: 'Seu pet está aqui' })
+      addMarker({ lngLat: petLgLat, map, popupMessage: 'Seu pet está aqui', type: 'pet' })
     }
 
   }, [petLgLat, loadedMap])
@@ -199,14 +194,14 @@ const MapPage = () => {
 
   useEffect(() => {
     if (userLngLat) {
-      addMarker({ lngLat: userLngLat, map, popupMessage: 'Você está aqui!' })
+      
       recalculateRoutes({ startLngLat: petLgLat, endLngLat: userLngLat })
 
     }
 
   }, [userLngLat])
   console.log('userLngLat:', userLngLat)
-
+  console.log('mapMarkers:', mapMarkers)
   return (
     <div className='d-flex bg-[#4811A2] h-screen items-center justify-center w-full overflow-y-scroll'>
       <HeaderMenu showingOptions={false} />
@@ -220,7 +215,7 @@ const MapPage = () => {
         </div>
         <div className="map-container">
           <div ref={mapElement} className="map" />
-          <span className= 'mx-4 my-6 bg-[#E8E8E8] px-10 m-0 py-2 rounded-3xl flex justify-center items-center space-x-5 text-[#4811A2] font-bold text-lg '>
+          <span className='mx-4 my-6 bg-[#E8E8E8] px-10 m-0 py-2 rounded-3xl flex justify-center items-center space-x-5 text-[#4811A2] font-bold text-lg '>
             <p className='text-center'>
 
               minha localização
