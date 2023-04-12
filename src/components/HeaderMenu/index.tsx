@@ -1,10 +1,11 @@
 import Link from "next/link";
+import { useState } from "react";
 import { FiMenu, FiUser } from "react-icons/fi";
 
 interface Props {
     userName?: string,
     onLogout?: () => void
-    selectedOption?: 'my-collars' |  'my-plan' | 'chat' | 'plans' | 'products',
+    selectedOption?: 'my-collars' | 'my-plan' | 'chat' | 'plans' | 'products',
     showingOptions?: boolean
 }
 
@@ -17,8 +18,14 @@ const options: { title: string, url: string }[] = [
 ]
 
 const HeaderMenu: React.FC<Props> = ({ userName, onLogout, showingOptions = true, selectedOption }) => {
+    const [visibleMobileMenu, setMobileMenuVisible] = useState(false)
     return (
         <header className="mb-5 bg-white  sm:flex sm:justify-between sm:items-center sm:px-4 sm:py-5">
+            {visibleMobileMenu &&
+                <div className=" sm:hidden h-full  absolute  z-50 w-full bg-red-500">
+                    MENU MOBILE !!!
+                </div>
+            }
             <div className="flex items-center justify-between px-4 py-3 sm:p-0">
                 <div className="flex items-center space-x-10">
                     <Link href="/">
@@ -32,10 +39,11 @@ const HeaderMenu: React.FC<Props> = ({ userName, onLogout, showingOptions = true
                             /> */}
                         </span>
                     </Link>
-                    <div className="space-x-1"><span className="font-bold">Olá</span> <span> Matheus Aragão </span></div>
+                    <div className="space-x-1 hidden sm:block" ><span className="font-bold">Olá</span> <span> Matheus Aragão </span></div>
                 </div>
                 <div className="sm:hidden">
                     <button
+                        onClick={()=> setMobileMenuVisible(!visibleMobileMenu)}
                         type="button"
                         className="text-black hover:text-purple-800 focus:outline-none focus:text-gray-400"
                     >
@@ -43,7 +51,7 @@ const HeaderMenu: React.FC<Props> = ({ userName, onLogout, showingOptions = true
                     </button>
                 </div>
             </div>
-            <nav className="px-2 pt-2 pb-4 sm:flex sm:p-0">
+            <nav className="px-2 pt-2 pb-4 sm:p-0 hidden sm:flex">
                 {showingOptions &&
                     <>
                         {options?.map(({ title, url }, i) => (
@@ -69,6 +77,8 @@ const HeaderMenu: React.FC<Props> = ({ userName, onLogout, showingOptions = true
                     </span>
                 </div>
             </nav>
+
+
         </header>
     );
 };
