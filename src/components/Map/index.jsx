@@ -9,16 +9,30 @@ import { useDispatch } from 'react-redux'
 import { CollarsData, fetchCollarsData } from '../../pages/my-collars/redux'
 import Link from 'next/link'
 import HeaderMenu from '../HeaderMenu/index'
-import { FiArrowLeft, FiUser } from 'react-icons/fi'
+import { FiArrowLeft, FiUser, FiSearch } from 'react-icons/fi'
 import { MdPets } from 'react-icons/md'
 import { toast } from 'react-toastify'
 
 const MapPage = () => {
+  const [userLngLat, setUserLngLat] = useState(null)
 
+  const getLatLongFromCep = async (cep) => {
+    try {
+      const response = await fetch(`https://nominatim.openstreetmap.org/search.php?q=${cep}&format=json`);
+      const data = await response.json();
+
+      const { lat, lon } = data[0];
+      setUserLngLat([lon, lat])
+      toast("Sucesso ao recuperar localização do usuário!", { type: 'success' });
+
+    } catch (error) {
+      toast("Erro ao tentar recuperar localização do usuário! Tente outro navegador. ", { type: 'error' });
+      console.error(error);
+    }
+  };
   const dispatch = useDispatch();
   const { data: petLgLat, error, status } = CollarsData();
   const [loadedMap, setLoadedMap] = useState(false)
-  const [userLngLat, setUserLngLat] = useState(null)
   const defaultLngLat = [-34.900002, -8.050000]
   function formatDistanceLength(lengthInMeters) {
     if (lengthInMeters >= 1000) {
@@ -89,7 +103,7 @@ const MapPage = () => {
 
   }
 
-console.log('userLngLat:', userLngLat)
+  console.log('userLngLat:', userLngLat)
   function successCallback(position) {
     const latitude = position.coords.latitude;
     const longitude = position.coords.longitude;
@@ -114,17 +128,8 @@ console.log('userLngLat:', userLngLat)
     console.error(message);
   }
 
-  const getUserLocation = () => {
-
-    try {
-      navigator.geolocation.getCurrentPosition(successCallback, errorCallback,
-         { enableHighAccuracy: true }
-         );
-      toast("Sucesso ao recuperar localização do usuário!", { type: 'success' });
-
-    } catch (err) {
-      toast("Erro ao tentar recuperar localização do usuário! Tente outro navegador. ", { type: 'error' });
-    }
+  const getUserLocation = async () => {
+    await getLatLongFromCep('51160220')
   }
 
 
@@ -200,7 +205,7 @@ console.log('userLngLat:', userLngLat)
     }
 
   }, [userLngLat])
-
+  console.log('userLngLat:', userLngLat)
 
   return (
     <div className='d-flex bg-[#4811A2] h-screen items-center justify-center w-full overflow-y-scroll'>
@@ -215,13 +220,14 @@ console.log('userLngLat:', userLngLat)
         </div>
         <div className="map-container">
           <div ref={mapElement} className="map" />
-          <span className='my-6 bg-[#E8E8E8] px-10 m-0 py-2 rounded-3xl flex justify-center items-center space-x-5 text-[#4811A2] font-bold text-lg '>
-            <p>
+          <span className= 'mx-4 my-6 bg-[#E8E8E8] px-10 m-0 py-2 rounded-3xl flex justify-center items-center space-x-5 text-[#4811A2] font-bold text-lg '>
+            <p className='text-center'>
 
               minha localização
             </p>
-            <button onClick={() => getUserLocation()}>
-              <FiRefreshCcw /></button>
+            <button onClick={async () => getUserLocation()}>
+              {!userLngLat ? <FiSearch /> : <FiRefreshCcw />}
+            </button>
             {petLgLat &&
               <span
                 style={{ justifyContent: userLngLat ? 'space-between' : 'center' }}
@@ -240,7 +246,7 @@ console.log('userLngLat:', userLngLat)
 
 
           {!_.isEmpty(routeInfo) &&
-            <span className='bg-[#E8E8E8] p-5 m-0 rounded-2xl text-[#4811A2] font-bold text-lg  text-center'>
+            <span className='bg-[#E8E8E8] p-5 mx-4 rounded-2xl text-[#4811A2] font-bold text-lg  text-center'>
               <div>Seu pet está há {routeInfo.distance} de você</div>
               <div>Para chegar até ele levará {routeInfo.travelTime}</div>
             </span>
