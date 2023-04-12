@@ -89,7 +89,7 @@ const MapPage = () => {
 
   }
 
-
+console.log('userLngLat:', userLngLat)
   function successCallback(position) {
     const latitude = position.coords.latitude;
     const longitude = position.coords.longitude;
@@ -117,7 +117,9 @@ const MapPage = () => {
   const getUserLocation = () => {
 
     try {
-      navigator.geolocation.getCurrentPosition(successCallback, errorCallback, { maximumAge: 60000, timeout: 5000, enableHighAccuracy: true });
+      navigator.geolocation.getCurrentPosition(successCallback, errorCallback,
+         { enableHighAccuracy: true }
+         );
       toast("Sucesso ao recuperar localização do usuário!", { type: 'success' });
 
     } catch (err) {
