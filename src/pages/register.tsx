@@ -18,12 +18,13 @@ const Register = () => {
         try {
             const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
             const data = await response.json();
-
+            console.log('data:', data)
             if (data.erro) {
                 setCepInvalid(true)
                 return false;
             }
             setFieldValue('address', data.logradouro ?? '');
+            setFieldValue('city', data.localidade ?? '');
             setFieldValue('neighborhood', data.bairro ?? '');
             setFieldValue('complement', data.complemento ?? '');
             setCepInvalid(false)
@@ -61,7 +62,8 @@ const Register = () => {
         phone: Yup.string().required('Telefone obrigatório'),
         gender: Yup.string().required('Gênero obrigatório'),
         cep: Yup.string().required('CEP obrigatório'),
-        address: Yup.string().required('Logradouro obrigatório'),
+        address: Yup.string().required('Endereço obrigatório'),
+        city: Yup.string().required('Cidade obrigatória'),
         neighborhood: Yup.string().required('Bairro obrigatório'),
         complement: Yup.string().required('Complemento obrigatório'),
         birth_date: Yup.date().required('Data de nascimento obrigatória'),
@@ -75,12 +77,13 @@ const Register = () => {
         full_name: string;
         email: string;
         cep: string;
+        city: string;
         address: string;
         neighborhood: string;
         complement: string;
         phone: string;
         gender: string;
-        birth_date: string;
+        birth_date: Date | string;
         password: string;
         confirm_password: string;
     }
@@ -89,6 +92,7 @@ const Register = () => {
         full_name: '',
         email: '',
         cep: '',
+        city: '',
         address: '',
         neighborhood: '',
         complement: '',
@@ -174,21 +178,19 @@ const Register = () => {
                                     >
                                         CEP
                                     </label>
-                                    <div className='flex flex-col items-end'>
 
-                                        <Field
-                                            maxLength={8}
-                                            validate={validateCep}
-                                            onBlur={checkCepValidity}
-                                            className={`${errors.cep && touched.cep
-                                                ? 'border-red-500'
-                                                : 'border-gray-300'
-                                                } shadow appearance-none border rounded-3xl w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
-                                            name="cep"
-                                            type="text"
-                                            placeholder="00000-000"
-                                        />
-                                    </div>
+                                    <Field
+                                        maxLength={8}
+                                        validate={validateCep}
+                                        onBlur={checkCepValidity}
+                                        className={`${errors.cep && touched.cep
+                                            ? 'border-red-500'
+                                            : 'border-gray-300'
+                                            } shadow appearance-none border rounded-3xl w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
+                                        name="cep"
+                                        type="text"
+                                        placeholder="00000-000"
+                                    />
                                     <ErrorMessage
                                         name="cep"
                                         component="div"
@@ -199,7 +201,7 @@ const Register = () => {
                                     <label
                                         className="block text-gray-700 text-sm font-bold mb-2"
                                     >
-                                        Logradouro
+                                        Endereço
                                     </label>
 
                                     <Field
@@ -211,12 +213,14 @@ const Register = () => {
                                         type="text"
                                         placeholder="Rua São Jose"
                                     />
+                                    <ErrorMessage
+                                        name="address"
+                                        component="div"
+                                        className="text-red-500 text-xs italic mt-1"
+                                    />
                                 </div>
-                                <ErrorMessage
-                                    name="address"
-                                    component="div"
-                                    className="text-red-500 text-xs italic mt-1"
-                                />
+
+
                                 <div className="mb-4 ">
                                     <label
                                         className="block text-gray-700 text-sm font-bold mb-2"
@@ -233,12 +237,33 @@ const Register = () => {
                                         type="text"
                                         placeholder="00000-000"
                                     />
+                                    <ErrorMessage
+                                        name="complement"
+                                        component="div"
+                                        className="text-red-500 text-xs italic mt-1"
+                                    />
                                 </div>
-                                <ErrorMessage
-                                    name="complement"
-                                    component="div"
-                                    className="text-red-500 text-xs italic mt-1"
-                                />
+                                <div className="mb-4 ">
+                                    <label
+                                        className="block text-gray-700 text-sm font-bold mb-2"
+                                    >
+                                        Cidade
+                                    </label>
+
+                                    <Field
+                                        className={`${errors.city && touched.city ? 'border-red-500'
+                                            : 'border-gray-300'
+                                            } shadow appearance-none border rounded-3xl w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
+                                        name="city"
+                                        type="text"
+                                        placeholder="ex: Imbiribeira"
+                                    />
+                                    <ErrorMessage
+                                        name="city"
+                                        component="div"
+                                        className="text-red-500 text-xs italic mt-1"
+                                    />
+                                </div>
                                 <div className="mb-4 ">
                                     <label
                                         className="block text-gray-700 text-sm font-bold mb-2"
@@ -254,12 +279,12 @@ const Register = () => {
                                         type="text"
                                         placeholder="ex: Imbiribeira"
                                     />
+                                    <ErrorMessage
+                                        name="neighborhood"
+                                        component="div"
+                                        className="text-red-500 text-xs italic mt-1"
+                                    />
                                 </div>
-                                <ErrorMessage
-                                    name="neighborhood"
-                                    component="div"
-                                    className="text-red-500 text-xs italic mt-1"
-                                />
                                 <div className="mb-4 ">
                                     <label
                                         className="block text-gray-700 text-sm font-bold mb-2"
