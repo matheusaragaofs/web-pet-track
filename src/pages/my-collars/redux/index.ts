@@ -1,4 +1,4 @@
-import { baseUrl, headers } from '@/config/api';
+import { baseUrlTag, headers } from '@/config/api';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../redux/store'
@@ -20,7 +20,7 @@ export const fetchCollarsData = createAsyncThunk<Collar[]>(
     'collars/fetchCollarsData',
     async () => {
         try {
-            const response = await fetch(`${baseUrl}/data?qty=1`, { headers });
+            const response = await fetch(`${baseUrlTag}/data?qty=1`, { headers });
             const data = await response.json();
             return data.result[0].location.coordinates
         } catch (error) {
@@ -30,7 +30,7 @@ export const fetchCollarsData = createAsyncThunk<Collar[]>(
 );
 
 export const fetchCollar = async ({ id }: { id?: number }) => {
-    const response = await fetch(`${baseUrl}/collars/${id}`);
+    const response = await fetch(`${baseUrlTag}/collars/${id}`);
     if (!response.ok) {
         throw new Error('Failed to fetch comapny data');
     }

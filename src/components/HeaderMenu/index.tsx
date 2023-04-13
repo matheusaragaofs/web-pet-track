@@ -1,3 +1,4 @@
+import { baseUrl } from "@/config/api";
 import Link from "next/link";
 import { useState } from "react";
 import { FiMenu, FiUser } from "react-icons/fi";
@@ -51,7 +52,7 @@ const HeaderMenu: React.FC<Props> = ({ userName, onLogout, showingOptions = true
                     <nav className="px-2 pt-2 pb-4 ">
                         {options?.map(({ title, url }, i) => (
 
-                            <Link key={i} href={url}>
+                            <Link key={i}  href={`${baseUrl}/${url}`}>
                                 <span
                                     style={{ color: selectedOption === url ? "#4811A2" : 'black' }}
                                     className="block px-2  font-semibold py-5 hover:text-purple-700 sm:mt-0 sm:ml-2 border-b border-gray-200">
