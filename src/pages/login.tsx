@@ -82,7 +82,9 @@ const Login = () => {
                                 </div>
                                 <div className="flex items-center justify-center">
                                     <button
-                                        className="border-2 border-purple-900  hover:bg-purple-700 text-purple-800 font-bold py-2 px-12 rounded-3xl focus:outline-none focus:shadow-outline"
+                                        className="border-2 border-purple-900 
+                                        hover:text-white transition-all 
+                                        hover:bg-purple-700 text-purple-800 font-bold py-2 px-12 rounded-3xl focus:outline-none focus:shadow-outline"
                                         type="submit"
                                     >
                                         Entrar

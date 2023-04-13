@@ -1,4 +1,6 @@
 import '@/styles/globals.css'
+import 'react-responsive-modal/styles.css';
+
 import { Provider } from 'react-redux'
 import type { AppProps } from 'next/app'
 import 'react-toastify/dist/ReactToastify.css';

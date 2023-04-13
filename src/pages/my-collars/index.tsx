@@ -1,6 +1,8 @@
 import HeaderMenu from "@/components/HeaderMenu";
 import Link from "next/link";
+import { useRef, useState } from "react";
 import { FiEdit, FiEye } from "react-icons/fi";
+import { Modal } from 'react-responsive-modal';
 
 interface Props {
     userName?: string,
@@ -18,12 +20,56 @@ interface ColorObject {
     darkColor: string;
 }
 const color = 'rgb(121, 141, 189)'
-const darkColor ='rgb(61, 71, 95)'
+const darkColor = 'rgb(61, 71, 95)'
 
 
 const MyCollarsPage: React.FC<Props> = ({ userName, onLogout, showingOptions = true }) => {
+    const [modalIsOpen, setIsOpen] = useState(false);
+    const [currentColarName, setCurrentColarName] = useState('');
+
+    function openModal(name: string) {
+        setCurrentColarName(name)
+        setIsOpen(true);
+    }
+
+
+    function closeModal() {
+        setCurrentColarName('')
+        setIsOpen(false);
+    }
+
+    const handleChangeCollarName = () => {
+        // requistion to change colar name here
+        setCurrentColarName('')
+        closeModal()
+
+    }
+
     return (
         <div className='d-flex bg-[#4811A2] h-screen items-center justify-center w-full overflow-y-scroll'>
+            {modalIsOpen &&
+                <Modal
+                    open={modalIsOpen}
+                    onClose={closeModal}
+                    center
+
+                >
+                    <div className="p-10 flex items-center justify-center flex-col space-y-10"  >
+                        <span className="text-2xl font-bold">{currentColarName}</span>
+                        <input
+                            placeholder="Selecione um nome..."
+                            className={`border-gray-300' shadow appearance-none border rounded-3xl w-[1/2] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
+                        />
+                        <button
+                            onClick={handleChangeCollarName}
+                            className="border-2 border-purple-900  hover:bg-purple-700 hover:text-white transition-all  text-purple-800 font-bold py-2 px-12 rounded-3xl focus:outline-none focus:shadow-outline"
+                            type="submit"
+                        >
+                            Mudar nome
+                        </button>
+                    </div>
+                </Modal>
+            }
             <HeaderMenu showingOptions={true} selectedOption='my-collars' />
             <div className="container mx-auto py-4  px-5">
                 <h1 className="text-3xl font-bold mb-4 text-white">Coleiras</h1>
@@ -42,11 +88,12 @@ const MyCollarsPage: React.FC<Props> = ({ userName, onLogout, showingOptions = t
                                     style={{ backgroundColor: darkColor }}
                                     className='flex h-16 justify-between items-center px-5 bottom-0 absolute w-full rounded-lg'>
                                     <span className="text-white font-bold text-lg ">{collar.name}</span>
-                                    <span className='flex space-x-5'>
+                                    <span className='flex space-x-5 '>
                                         <Link href={`my-collars/:id`}>
-                                            <FiEye color="white" />
+                                            <FiEye  className='icon' color="white" />
                                         </Link>
-                                        <FiEdit color="white" />
+                                        <FiEdit 
+                                        className="cursor-pointer transaition-all icon" onClick={() => openModal(collar.name)} color="white" />
                                     </span>
                                 </div>
                             </div>
@@ -56,6 +103,7 @@ const MyCollarsPage: React.FC<Props> = ({ userName, onLogout, showingOptions = t
             </div>
         </div>
     );
+
 };
 
 export default MyCollarsPage;
