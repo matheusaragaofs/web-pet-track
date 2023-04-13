@@ -22,7 +22,6 @@ const darkColor ='rgb(61, 71, 95)'
 
 
 const MyCollarsPage: React.FC<Props> = ({ userName, onLogout, showingOptions = true }) => {
-    console.log('MINHAS COLEIRAS')
     return (
         <div className='d-flex bg-[#4811A2] h-screen items-center justify-center w-full overflow-y-scroll'>
             <HeaderMenu showingOptions={true} selectedOption='my-collars' />

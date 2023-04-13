@@ -9,7 +9,7 @@ import { useDispatch } from 'react-redux'
 import { CollarsData, fetchCollarsData } from '../../pages/my-collars/redux'
 import Link from 'next/link'
 import HeaderMenu from '../HeaderMenu/index'
-import { FiArrowLeft, FiUser, FiSearch } from 'react-icons/fi'
+import { FiArrowLeft, FiUser, FiX, FiSearch } from 'react-icons/fi'
 import { MdPets } from 'react-icons/md'
 import { toast } from 'react-toastify'
 
@@ -102,7 +102,6 @@ const MapPage = () => {
     if (draggable) {
       marker.on('dragend', () => {
         const lngLat = marker.getLngLat()
-        console.log('lngLat:', lngLat)
         setUserLngLat([lngLat.lng, lngLat.lat])
       })
     }
@@ -112,23 +111,31 @@ const MapPage = () => {
 
   }
 
-  console.log('userLngLat:', userLngLat)
 
 
   const getUserLocation = async () => {
     await getLatLongFromCep('51160220')
   }
 
-
-  const recalculateRoutes = ({ startLngLat, endLngLat }) => {
+  const handleUserMarker = (addNewMarker) => {
     let markersCopy = mapMarkers
     const lastUserMarker = markersCopy[markersCopy.length - 1]
-    if (lastUserMarker.type === 'user') {
-      const m  = markersCopy.pop()
+    if (markersCopy.length > 1 && lastUserMarker.type === 'user') {
+      const m = markersCopy.pop()
       m.marker.remove()
       setMapMarkers(markersCopy)
     }
-    addMarker({ lngLat: userLngLat, map, popupMessage: 'Você está aqui!', draggable: true, type: 'user' })
+    if (addNewMarker) {
+      addMarker({
+        lngLat: userLngLat, map, popupMessage:
+          'Localização gerada a partir do seu endereço'
+        , draggable: true, type: 'user'
+      })
+    }
+  }
+
+  const recalculateRoutes = ({ startLngLat, endLngLat }) => {
+    handleUserMarker(true)
     const locations =
       [
         {
@@ -194,14 +201,10 @@ const MapPage = () => {
 
   useEffect(() => {
     if (userLngLat) {
-      
       recalculateRoutes({ startLngLat: petLgLat, endLngLat: userLngLat })
-
     }
 
   }, [userLngLat])
-  console.log('userLngLat:', userLngLat)
-  console.log('mapMarkers:', mapMarkers)
   return (
     <div className='d-flex bg-[#4811A2] h-screen items-center justify-center w-full overflow-y-scroll'>
       <HeaderMenu showingOptions={false} />
@@ -215,9 +218,8 @@ const MapPage = () => {
         </div>
         <div className="map-container">
           <div ref={mapElement} className="map" />
-          <span className='mx-4 my-6 bg-[#E8E8E8] px-10 m-0 py-2 rounded-3xl flex justify-center items-center space-x-5 text-[#4811A2] font-bold text-lg '>
+          <span className='mx-5 my-6 bg-[#E8E8E8] px-10 m-0 py-2 rounded-3xl flex justify-center items-center space-x-5 text-[#4811A2] font-bold text-lg '>
             <p className='text-center'>
-
               minha localização
             </p>
             <button onClick={async () => getUserLocation()}>
@@ -227,6 +229,17 @@ const MapPage = () => {
               <span
                 style={{ justifyContent: userLngLat ? 'space-between' : 'center' }}
                 className=' bg-[#E8E8E8]  py-2 rounded-3xl flex space-x-4 items-center text-[#4811A2] font-bold text-lg '>
+                {userLngLat &&
+                  <button onClick={() => {
+                    map?.removeLayer('route')
+                    map?.removeSource('route')
+                    handleUserMarker()
+                    setUserLngLat(null)
+                    setRouteInfo(null)
+                  }}>
+                    <FiX />
+                  </button>
+                }
                 {userLngLat &&
                   <button onClick={() => map.setCenter(userLngLat)}>
                     <FiUser />
