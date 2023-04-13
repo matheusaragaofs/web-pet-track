@@ -52,20 +52,20 @@ const HeaderMenu: React.FC<Props> = ({ userName, onLogout, showingOptions = true
                     <nav className="px-2 pt-2 pb-4 ">
                         {options?.map(({ title, url }, i) => (
 
-                            <Link key={i}  href={`${baseUrl}/${url}`}>
+                            <Link key={i} href={`${baseUrl}/${url}`}>
                                 <span
                                     style={{ color: selectedOption === url ? "#4811A2" : 'black' }}
-                                    className="block px-2  font-semibold py-5 hover:text-purple-700 sm:mt-0 sm:ml-2 border-b border-gray-200">
+                                    className="block px-2  header-option font-semibold py-5 sm:mt-0 sm:ml-2 border-b border-gray-200">
                                     {title}
                                 </span>
                             </Link>
                         ))}
                         <span
-                            className="block px-2  font-semibold py-5 hover:text-purple-700 sm:mt-0 sm:ml-2 border-b border-gray-200">
+                            className="block px-2   header-option font-semibold py-5 sm:mt-0 sm:ml-2 border-b border-gray-200">
                             meu perfil
                         </span>
                         <span
-                            className="block px-2  font-semibold py-5 hover:text-purple-700 sm:mt-0 sm:ml-2 border-b border-gray-200">
+                            className="block px-2  header-option  font-semibold py-5 sm:mt-0 sm:ml-2 border-b border-gray-200">
                             sair
                         </span>
                     </nav>
@@ -109,7 +109,7 @@ const HeaderMenu: React.FC<Props> = ({ userName, onLogout, showingOptions = true
                             <Link key={i} href={url}>
                                 <span
                                     style={{ color: selectedOption === url ? "#4811A2" : 'black' }}
-                                    className="block px-2 py-1 font-semibold rounded hover:text-purple-700 sm:mt-0 sm:ml-2">
+                                    className="block header-option px-2 py-1 font-semibold rounded hover:text-purple-700 sm:mt-0 sm:ml-2">
                                     {title}
                                 </span>
                             </Link>
@@ -121,7 +121,7 @@ const HeaderMenu: React.FC<Props> = ({ userName, onLogout, showingOptions = true
                         className="inline-flex justify-center items-center w-full rounded-full h-8 px-3 text-black focus:outline-none focus:shadow-outline"
                     >
                         <FiUser className="h-4 w-4" />
-                        <button className="ml-5 bg-[#4811A2] text-white rounded-2xl px-5 font-bold ">
+                        <button className="ml-5 bg-[#4811A2] hover:bg-[#7633e2] transition-all text-white rounded-2xl px-5 font-bold ">
                             <span>Sair</span>
                         </button>
                     </span>
