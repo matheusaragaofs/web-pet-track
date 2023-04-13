@@ -23,6 +23,13 @@ a {
   color: #cdb5f4 !important;
   transition: all;
   transition-duration: 200ms;
+  cursor: pointer;
+}
+.header-option:hover {
+  color: #7f3bec !important;
+  transition: all;
+  transition-duration: 200ms;
+  cursor: pointer;
 }
 .map-container {
   height: 100%;
