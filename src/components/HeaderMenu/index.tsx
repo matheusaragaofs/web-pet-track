@@ -1,5 +1,6 @@
 import { baseUrl } from "@/config/api";
 import Link from "next/link";
+import { useRouter } from 'next/router'
 import { useState } from "react";
 import { FiMenu, FiUser } from "react-icons/fi";
 
@@ -20,6 +21,9 @@ const options: { title: string, url: string }[] = [
 
 const HeaderMenu: React.FC<Props> = ({ userName, onLogout, showingOptions = true, selectedOption }) => {
     const [visibleMobileMenu, setMobileMenuVisible] = useState(false)
+
+    const router = useRouter()
+    console.log('router:', router)
     return (
         <header className="mb-5 bg-white  sm:flex sm:justify-between sm:items-center sm:px-4 sm:py-5">
 
@@ -52,13 +56,13 @@ const HeaderMenu: React.FC<Props> = ({ userName, onLogout, showingOptions = true
                     <nav className="px-2 pt-2 pb-4 ">
                         {options?.map(({ title, url }, i) => (
 
-                            <Link key={i} href={`${baseUrl}/${url}`}>
-                                <span
-                                    style={{ color: selectedOption === url ? "#4811A2" : 'black' }}
-                                    className="block px-2  header-option font-semibold py-5 sm:mt-0 sm:ml-2 border-b border-gray-200">
-                                    {title}
-                                </span>
-                            </Link>
+                            <span
+                                onClick={() => router.push(`${baseUrl}/${url}`)}
+                                key={url}
+                                style={{ color: selectedOption === url ? "#4811A2" : 'black' }}
+                                className="block px-2  header-option font-semibold py-5 sm:mt-0 sm:ml-2 border-b border-gray-200">
+                                {title}
+                            </span>
                         ))}
                         <span
                             className="block px-2   header-option font-semibold py-5 sm:mt-0 sm:ml-2 border-b border-gray-200">
@@ -105,14 +109,16 @@ const HeaderMenu: React.FC<Props> = ({ userName, onLogout, showingOptions = true
                 {showingOptions &&
                     <>
                         {options?.map(({ title, url }, i) => (
+                            // <Link key={i} href={url}>
 
-                            <Link key={i} href={url}>
-                                <span
-                                    style={{ color: selectedOption === url ? "#4811A2" : 'black' }}
-                                    className="block header-option px-2 py-1 font-semibold rounded hover:text-purple-700 sm:mt-0 sm:ml-2">
-                                    {title}
-                                </span>
-                            </Link>
+                            <span
+                                key={url}
+                                onClick={() => router.push(`${baseUrl}/${url}`)}
+                                style={{ color: selectedOption === url ? "#4811A2" : 'black' }}
+                                className="block header-option px-2 py-1 font-semibold rounded hover:text-purple-700 sm:mt-0 sm:ml-2">
+                                {title}
+                            </span>
+                            // </Link>
                         ))}
                     </>
                 }

@@ -1,37 +1,34 @@
 import HeaderMenu from "@/components/HeaderMenu";
+import { baseUrl } from "@/config/api";
 import Link from "next/link";
 
 const products: IProduct[] = [
     {
         id: 1,
+        type: 'collar',
         name: 'Coleira Rastreadora',
-        darkColor: '#0DAFE2',
-        color: '#66DAFF',
-        description: 'Feita com nylon e malha de poliéster, proporcionando mais conforto para o PET,  diversos tamanhos e cores. Além disso, um mini rastreador portátil, com bateria removível, fica embutido numa região da coleira escolhida pelo cliente.',
+        description: 'Coleira rastreável composta por  nylon e malha de poliéster, proporcionando mais conforto para o seu pet.',
         value: '300',
     },
     {
         id: 2,
+        type: 'battery-3800',
         name: 'Bateria 3800mAh',
-        darkColor: '#4811A2',
-        color: '#5F10DF',
         description: 'Bateria recarregável de íon de lítio de 3800mAh.',
         value: '35',
     },
     {
         id: 3,
+        type: 'battery-6600',
         name: 'Bateria 6600mAh',
-        darkColor: '#4811A2',
-        color: '#5F10DF',
         description: 'Bateria recarregável de íon de lítio de 6600mAh.',
         value: '60',
     },
 
     {
         id: 5,
+        type: 'nylon-clasp',
         name: 'Fecho de Nylon',
-        darkColor: '#008E8D',
-        color: '#01D7D5',
         description: 'Fecho engate rápido para coleiras em cores variadas.',
         value: '4',
     },
@@ -40,18 +37,20 @@ const products: IProduct[] = [
 
 
 interface IProduct {
+    type: string,
     id: number,
     name: string,
-    color: string,
-    darkColor: string,
     description: string,
     value: string,
 }
-const renderProduct = ({ id, name, color, darkColor, description, value }: IProduct) => (
+const renderProduct = ({ id, name,  type, description, value }: IProduct) => (
     <div
         key={id}
-        style={{ backgroundColor: color }}
-        className="m-auto bg-white rounded-3xl relative shadow-md h-[500px] w-64 sm:w-[460px] md:w-[500px] lg:w-[500px] hover:shadow-lg transition duration-300"
+
+        className="m-auto 
+        bg-gradient-to-r from-[#9a6ee2] to-[#6524e7]
+
+        rounded-3xl relative shadow-md h-[500px] w-64 sm:w-[460px] md:w-[500px] lg:w-[500px] hover:shadow-lg transition duration-300"
     >
         <div className="flex justify-evenly items-center flex-col h-2/3 ">
             <h1 className="text-xl lg:text-4xl font-bold text-white text-center">{name}</h1>
@@ -61,9 +60,26 @@ const renderProduct = ({ id, name, color, darkColor, description, value }: IProd
             </div>
         </div>
         <div
-            style={{ backgroundColor: darkColor }}
-            className='flex flex-col h-40 justify-center items-center px-5 bottom-0 absolute w-full rounded-3xl'>
+            className='
+            bg-gradient-to-r  from-[#230d43] to-[#321362]
+            flex flex-col justify-center items-center px-5 bottom-0 absolute w-full rounded-3xl'>
             <span className="text-white font-bold  text-xs lg:text-sm text-center p-5 ">{description}</span>
+            <div className="flex items-center pb-5 justify-center  ">
+                <Link href={`${baseUrl}/purchase/${type}`}>
+                    <button
+                        className="
+                                       bg-[#8166aa]
+                                       hover:bg-green-400
+                                       text-white
+                                       transition-all
+                                       duration-200
+                                       font-bold py-2 px-12 rounded-xl focus:outline-none focus:shadow-outline"
+                        type="submit"
+                    >
+                        Comprar
+                    </button>
+                </Link>
+            </div>
         </div>
     </div>
 )
@@ -71,11 +87,11 @@ const renderProduct = ({ id, name, color, darkColor, description, value }: IProd
 
 const ProductsPage: React.FC = () => {
     return (
-        <div className='d-flex bg-white h-screen items-center justify-center w-full overflow-y-scroll'>
+        <div className='d-flex bg-gradient-to-r  from-[#4505a7] to-[#5312bd] h-screen items-center justify-center w-full overflow-y-scroll'>
             {/* <div className='text-3xl font-bold .'>Rastreie seu pet</div> */}
             <HeaderMenu showingOptions={true} selectedOption='products' />
             <div className="container mx-auto py-4  px-5">
-                <h1 className="text-3xl font-bold mb-4 text-[#4811A2]">Produtos</h1>
+                <h1 className="text-3xl font-bold mb-4 text-white">Produtos</h1>
                 <div className="gap-4 grid grid-cols-1 justify-evenly items-center  w-full">
                     {products.map((product) => renderProduct(product))}
                 </div>

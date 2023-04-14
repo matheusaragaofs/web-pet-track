@@ -46,7 +46,7 @@ const MyCollarsPage: React.FC<Props> = ({ userName, onLogout, showingOptions = t
     }
 
     return (
-        <div className='d-flex bg-[#4811A2] h-screen items-center justify-center w-full overflow-y-scroll'>
+        <div className='d-flex         bg-gradient-to-r   from-[#4505a7] to-[#5312bd]  h-screen items-center justify-center w-full overflow-y-scroll'>
             {modalIsOpen &&
                 <Modal
                     open={modalIsOpen}
@@ -78,15 +78,19 @@ const MyCollarsPage: React.FC<Props> = ({ userName, onLogout, showingOptions = t
                         return (
                             <div
                                 key={collar.id}
-                                style={{ backgroundColor: color }}
-                                className="rounded-lg relative shadow-md h-56 w-[260px]  hover:shadow-lg transition duration-300"
+                                className="
+                                bg-gradient-to-r from-[#9a6ee2] to-[#6524e7]
+
+                                rounded-lg relative shadow-md h-56 w-[260px]  hover:shadow-lg transition duration-300"
                             >
                                 <div className="flex justify-center items-center h-2/3">
                                     <img src={collar.image} alt={collar.name} className="w-32 h-32  object-cover " />
                                 </div>
                                 <div
-                                    style={{ backgroundColor: darkColor }}
-                                    className='flex h-16 justify-between items-center px-5 bottom-0 absolute w-full rounded-lg'>
+                                    className='
+                                    bg-gradient-to-r  from-[#230d43] to-[#321362]
+
+                                    flex h-16 justify-between items-center px-5 bottom-0 absolute w-full rounded-lg'>
                                     <span className="text-white font-bold text-lg ">{collar.name}</span>
                                     <span className='flex space-x-5 '>
                                         <Link href={`my-collars/:id`}>

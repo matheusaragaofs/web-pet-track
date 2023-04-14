@@ -206,7 +206,8 @@ const MapPage = () => {
 
   }, [userLngLat])
   return (
-    <div className='d-flex bg-[#4811A2] h-screen items-center justify-center w-full overflow-y-scroll'>
+    <div className='d-flex  bg-gradient-to-r from-[#4505a7] to-[#5312bd] 
+    h-screen items-center justify-center w-full overflow-y-scroll'>
       <HeaderMenu showingOptions={false} />
       <div className='h-2/3'>
         <div className='w-3/4 m-auto d-flex text-right relative' >
