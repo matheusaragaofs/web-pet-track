@@ -28,11 +28,9 @@ const plans = [
 
 const PlansPage: React.FC = () => {
     return (
-        <div className='d-flex    bg-gradient-to-r   from-[#4505a7] to-[#5312bd] h-screen items-center justify-center w-full overflow-y-scroll'>
-            {/* <div className='text-3xl font-bold .'>Rastreie seu pet</div> */}
-            <HeaderMenu showingOptions={true} selectedOption='plans' />
+        <div className="h-screen overflow-scroll pb-32">
             <div className="container mx-auto py-4  px-5">
-                <h1 className="text-3xl font-bold mb-4 text-white">Planos</h1>
+                <h1 className="text-3xl font-bold mb-10 mt-5 text-white">Planos</h1>
                 <div className="gap-4 flex justify-evenly items-center flex-wrap  w-full">
                     {plans.map((plan) => {
                         return (

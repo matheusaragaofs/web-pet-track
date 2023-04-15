@@ -8,6 +8,7 @@ interface Props {
     userName?: string,
     onLogout?: () => void
     showingOptions?: boolean
+    user?: string
 }
 const collars = [
     { id: 1, name: 'Collar 1', image: 'https://source.unsplash.com/random/400x400?dog' },
@@ -23,7 +24,7 @@ const color = 'rgb(121, 141, 189)'
 const darkColor = 'rgb(61, 71, 95)'
 
 
-const MyCollarsPage: React.FC<Props> = ({ userName, onLogout, showingOptions = true }) => {
+const MyCollarsPage: React.FC<Props> = ({ user, userName, onLogout, showingOptions = true }) => {
     const [modalIsOpen, setIsOpen] = useState(false);
     const [currentColarName, setCurrentColarName] = useState('');
 
@@ -46,11 +47,12 @@ const MyCollarsPage: React.FC<Props> = ({ userName, onLogout, showingOptions = t
     }
 
     return (
-        <div className='d-flex         bg-gradient-to-r   from-[#4505a7] to-[#5312bd]  h-screen items-center justify-center w-full overflow-y-scroll'>
+        <div className=" h-full overflow-scroll pb-32 " >
             {modalIsOpen &&
                 <Modal
                     open={modalIsOpen}
                     onClose={closeModal}
+                    styles={{modal: {padding:0}}}
                     center
 
                 >
@@ -70,8 +72,7 @@ const MyCollarsPage: React.FC<Props> = ({ userName, onLogout, showingOptions = t
                     </div>
                 </Modal>
             }
-            <HeaderMenu showingOptions={true} selectedOption='my-collars' />
-            <div className="container mx-auto py-4  px-5">
+            <div className="container mx-auto py-4 px-5">
                 <h1 className="text-3xl font-bold mb-4 text-white">Coleiras</h1>
                 <div className="gap-4 flex justify-evenly items-center flex-wrap  w-full">
                     {collars.map((collar) => {
@@ -94,10 +95,10 @@ const MyCollarsPage: React.FC<Props> = ({ userName, onLogout, showingOptions = t
                                     <span className="text-white font-bold text-lg ">{collar.name}</span>
                                     <span className='flex space-x-5 '>
                                         <Link href={`my-collars/:id`}>
-                                            <FiEye  className='icon' color="white" />
+                                            <FiEye className='icon' color="white" />
                                         </Link>
-                                        <FiEdit 
-                                        className="cursor-pointer transaition-all icon" onClick={() => openModal(collar.name)} color="white" />
+                                        <FiEdit
+                                            className="cursor-pointer transaition-all icon" onClick={() => openModal(collar.name)} color="white" />
                                     </span>
                                 </div>
                             </div>

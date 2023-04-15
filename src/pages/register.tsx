@@ -110,13 +110,13 @@ const Register = () => {
 
     const formikRef = useRef<FormikProps<MyFormValues> | null>(null);
     return (
-        <div className="flex justify-center h-screen items-center overflow-hidden">
+        <div className="flex justify-center items-center overflow-hidden h-full">
             {/* <span className='absolute left-5 top-10 text-2xl'>
                 <span className="font-bold text-purple-900">confor</span>
                 <span>Track</span>
             </span> */}
-            <div className="flex flex-col md:flex-row w-full md:w-1/2 h-full  overflow-scroll">
-                <div className="bg-white w-full lg:w-3/4 px-8 pt-6 pb-8 mb-4">
+            <div className="flex flex-col md:flex-row w-full md:w-1/2 h-full bg-white   overflow-scroll">
+                <div className="w-full h-full px-8 pt-6 pb-8 mb-4">
                     <h1 className="text-3xl font-bold mb-6">Criar Conta</h1>
                     <Formik
                         innerRef={formikRef}

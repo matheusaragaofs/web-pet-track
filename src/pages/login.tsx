@@ -1,5 +1,7 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import { useRouter } from 'next/router'
+import { toast } from 'react-toastify';
 
 const Login = () => {
     // Define the validation schema using Yup
@@ -13,21 +15,27 @@ const Login = () => {
         email: '',
         password: '',
     };
+    const validUser = {
+        email: 'dev@email.com',
+        password: '123',
+    }
 
-    // Handle the form submission
+    const router = useRouter()
     const onSubmit = (values: any) => {
         console.log(values);
+        if (values.email === validUser.email && values.password === validUser.password) {
+            localStorage.setItem('user', JSON.stringify(values));
+            router.push('/my-collars');
+        } else {
+            toast('E-mail ou senha inválida', { type: 'error' })
+        }
+
     };
 
     return (
-        <div className="flex justify-center h-screen items-center overflow-hidden">
-            <div className="flex  w-full md:w-1/2">
-                <div className="bg-white w-full md:w-1/2 px-8 pt-6 pb-8 mb-4">
-                    <span className='absolute top-10 text-2xl'>
-                        <span className="font-bold text-purple-900  ">confor</span>
-                        <span >Track</span>
-
-                    </span>
+        <div className="flex justify-center items-center overflow-hidden h-full">
+            <div className="flex  items-center justify-center w-full md:w-1/2 p-20 ">
+                <div className="bg-white w-full p-10 rounded-2xl ">
                     <h1 className="text-3xl font-bold mb-6">Entrar</h1>
                     <Formik
                         initialValues={initialValues}
@@ -45,8 +53,8 @@ const Login = () => {
                                     </label>
                                     <Field
                                         className={`${errors.email && touched.email
-                                                ? 'border-red-500'
-                                                : 'border-gray-300'
+                                            ? 'border-red-500'
+                                            : 'border-gray-300'
                                             } shadow appearance-none border rounded-3xl w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
                                         name="email"
                                         type="email"
@@ -67,8 +75,8 @@ const Login = () => {
                                     </label>
                                     <Field
                                         className={`${errors.password && touched.password
-                                                ? 'border-red-500'
-                                                : 'border-gray-300'
+                                            ? 'border-red-500'
+                                            : 'border-gray-300'
                                             } shadow appearance-none border rounded-3xl w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
                                         name="password"
                                         type="password"
@@ -94,9 +102,8 @@ const Login = () => {
                         )}
                     </Formik>
                 </div>
-
             </div>
-            <div className="w-full hidden md:w-1/2 h-full  sm:block">
+            <div className="w-full hidden md:w-1/2 rounded-lg h-full sm:block">
                 <img src={'https://source.unsplash.com/random/1080x1280?dog'} className={'h-full w-full'} alt={'cat'} object-cover />
             </div>
         </div>

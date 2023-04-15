@@ -206,10 +206,7 @@ const MapPage = () => {
 
   }, [userLngLat])
   return (
-    <div className='d-flex  bg-gradient-to-r from-[#4505a7] to-[#5312bd] 
-    h-screen items-center justify-center w-full overflow-y-scroll'>
-      <HeaderMenu showingOptions={false} />
-      <div className='h-2/3'>
+      <div className='h-2/3 mt-10'>
         <div className='w-3/4 m-auto d-flex text-right relative' >
           <Link href='/my-collars' className='flex space-x-8'>
             <FiArrowLeft color='white' size={22} />
@@ -263,7 +260,6 @@ const MapPage = () => {
         </div>
 
       </div>
-    </div>
 
 
 

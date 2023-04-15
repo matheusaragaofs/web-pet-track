@@ -46,10 +46,8 @@ interface IProduct {
 const renderProduct = ({ id, name,  type, description, value }: IProduct) => (
     <div
         key={id}
-
         className="m-auto 
         bg-gradient-to-r from-[#9a6ee2] to-[#6524e7]
-
         rounded-3xl relative shadow-md h-[500px] w-64 sm:w-[460px] md:w-[500px] lg:w-[500px] hover:shadow-lg transition duration-300"
     >
         <div className="flex justify-evenly items-center flex-col h-2/3 ">
@@ -87,15 +85,11 @@ const renderProduct = ({ id, name,  type, description, value }: IProduct) => (
 
 const ProductsPage: React.FC = () => {
     return (
-        <div className='d-flex bg-gradient-to-r  from-[#4505a7] to-[#5312bd] h-screen items-center justify-center w-full overflow-y-scroll'>
-            {/* <div className='text-3xl font-bold .'>Rastreie seu pet</div> */}
-            <HeaderMenu showingOptions={true} selectedOption='products' />
-            <div className="container mx-auto py-4  px-5">
+            <div className="container mx-auto py-4 h-screen   overflow-scroll pb-32  px-5">
                 <h1 className="text-3xl font-bold mb-4 text-white">Produtos</h1>
                 <div className="gap-4 grid grid-cols-1 justify-evenly items-center  w-full">
                     {products.map((product) => renderProduct(product))}
                 </div>
-            </div>
         </div>
     );
 };

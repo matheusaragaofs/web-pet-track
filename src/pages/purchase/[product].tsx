@@ -1,4 +1,6 @@
 import HeaderMenu from "@/components/HeaderMenu";
+import { FiArrowLeft, FiArrowUpLeft } from "react-icons/fi";
+
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from 'yup';
 import { useRouter } from 'next/router'
@@ -87,159 +89,155 @@ const PurchasePage = () => {
     const currentProduct = productsObject[product]
 
     return (
-        // <div className='d-flex bg-[#5F10DF] h-screen items-center justify-center w-full overflow-y-scroll'>
-        <div className='d-flex  bg-gradient-to-r  from-[#4505a7] to-[#5312bd] h-screen items-center justify-center w-full overflow-y-scroll'>
-            {/* <div className='text-3xl font-bold .'>Rastreie seu pet</div> */}
-            <HeaderMenu showingOptions={true} selectedOption='plans' />
-            <div className="flex items-center flex-col justify-center py-4 w-full h-full px-5 relative">
-                <h1 className="text-3xl font-bold mb-4 text-white absolute left-10 top-10">Voltar</h1>
-                <div
-                    className="rounded-2xl relative shadow-md hover:shadow-lg
-                   bg-gradient-to-r from-[#9a6ee2] to-[#6524e7]
-
+        <div className="flex items-center overflow-scroll pb-20 flex-col mt-4 h-full  ">
+            {/* <span className="text font-bold mb-4 text-white self-start"><FiArrowLeft size={24} /></span> */}
+            <div
+                className="rounded-2xl relative shadow-md hover:shadow-lg
+                    bg-gradient-to-r from-[#9a6ee2] to-[#6524e7] 
+                    max-w-[400px]
                     transition duration-300"
-                >
-                    <div className="flex justify-evenly items-center flex-col py-20">
-                        <h1 className="text-4xl font-bold text-white p-2">{currentProduct?.name}</h1>
-                        <h1 className="text-2xl font-bold text-white p-2">R${currentProduct?.value},00</h1>
-                        <span className="text-white font-bold text-lg text-center p-2 ">Rastreamento em tempo real</span>
-                        <span className="text-white font-bold text-2xl ">{currentProduct?.duration}</span>
-                    </div>
-                    <Formik
-                        initialValues={initialValues}
-                        onSubmit={onSubmit}
-                        validationSchema={validationSchema}
-                    >
-                        {({ errors, touched }) => (
-                            <Form className="p-5 bg-gray-100 rounded-2xl min-h-[450px] relative" >
-                                <div className="mb-4 ">
-                                    <label
-                                        className="block text-gray-700 text-sm font-bold mb-2"
-                                        htmlFor="card_holder"
-                                    >
-                                        Nome no Cartão
-                                    </label>
-                                    <Field
-                                        className={`${errors.card_holder && touched.card_holder
-                                            ? 'border-red-500'
-                                            : 'border-gray-300'
-                                            } shadow appearance-none border rounded-xl w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
-                                        name="card_holder"
-                                        type="text"
-                                    />
-                                    <ErrorMessage
-                                        name="card_holder"
-                                        component="div"
-                                        className="text-red-500 text-xs italic mt-1"
-                                    />
-                                </div>
 
+            >
+                <div className="flex justify-evenly items-center flex-col py-10">
+                    <h1 className="text-4xl font-bold text-white tex-center p-2">{currentProduct?.name}</h1>
+                    <h1 className="text-2xl font-bold text-white tex-center p-2">R${currentProduct?.value},00</h1>
+                    <span className="text-white font-bold text-lg text-center p-2 ">Rastreamento em tempo real</span>
+                    <span className="text-white font-bold text-2xl  tex-center">{currentProduct?.duration}</span>
+                </div>
+                <Formik
+                    initialValues={initialValues}
+                    onSubmit={onSubmit}
+                    validationSchema={validationSchema}
+                >
+                    {({ errors, touched }) => (
+                        <Form className="p-5 bg-gray-100 rounded-2xl relative pb-10 " >
+                            <div className="mb-4 ">
+                                <label
+                                    className="block text-gray-700 text-sm font-bold mb-2"
+                                    htmlFor="card_holder"
+                                >
+                                    Nome no Cartão
+                                </label>
+                                <Field
+                                    className={`${errors.card_holder && touched.card_holder
+                                        ? 'border-red-500'
+                                        : 'border-gray-300'
+                                        } shadow appearance-none border rounded-xl w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
+                                    name="card_holder"
+                                    type="text"
+                                />
+                                <ErrorMessage
+                                    name="card_holder"
+                                    component="div"
+                                    className="text-red-500 text-xs italic mt-1"
+                                />
+                            </div>
+
+                            <div className="mb-4 ">
+                                <label
+                                    className="block text-gray-700 text-sm font-bold mb-2"
+                                    htmlFor="card_number"
+                                >
+                                    Número
+                                </label>
+                                <Field
+                                    className={`${errors.card_number && touched.card_number
+                                        ? 'border-red-500'
+                                        : 'border-gray-300'
+                                        } shadow appearance-none border rounded-xl w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
+                                    name="card_number"
+                                    type="text"
+                                />
+                                <ErrorMessage
+                                    name="card_number"
+                                    component="div"
+                                    className="text-red-500 text-xs italic mt-1"
+                                />
+                            </div>
+                            <div className="flex space-x-10">
                                 <div className="mb-4 ">
                                     <label
                                         className="block text-gray-700 text-sm font-bold mb-2"
                                         htmlFor="card_number"
                                     >
-                                        Número
+                                        Mês
                                     </label>
                                     <Field
-                                        className={`${errors.card_number && touched.card_number
+                                        className={`${errors.expiration_month && touched.expiration_month
                                             ? 'border-red-500'
                                             : 'border-gray-300'
                                             } shadow appearance-none border rounded-xl w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
-                                        name="card_number"
+                                        name="expiration_month"
                                         type="text"
                                     />
                                     <ErrorMessage
-                                        name="card_number"
+                                        name="expiration_month"
                                         component="div"
                                         className="text-red-500 text-xs italic mt-1"
                                     />
                                 </div>
-                                <div className="flex space-x-10">
-                                    <div className="mb-4 ">
-                                        <label
-                                            className="block text-gray-700 text-sm font-bold mb-2"
-                                            htmlFor="card_number"
-                                        >
-                                            Mês
-                                        </label>
-                                        <Field
-                                            className={`${errors.expiration_month && touched.expiration_month
-                                                ? 'border-red-500'
-                                                : 'border-gray-300'
-                                                } shadow appearance-none border rounded-xl w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
-                                            name="expiration_month"
-                                            type="text"
-                                        />
-                                        <ErrorMessage
-                                            name="expiration_month"
-                                            component="div"
-                                            className="text-red-500 text-xs italic mt-1"
-                                        />
-                                    </div>
-                                    <div className="mb-4 ">
-                                        <label
-                                            className="block text-gray-700 text-sm font-bold mb-2"
-                                        >
-                                            Ano
-                                        </label>
-                                        <Field
-                                            className={`${errors.expiration_year && touched.expiration_year
-                                                ? 'border-red-500'
-                                                : 'border-gray-300'
-                                                } shadow appearance-none border rounded-xl w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
-                                            name="expiration_year"
-                                            type="text"
-                                        />
-                                        <ErrorMessage
-                                            name="expiration_year"
-                                            component="div"
-                                            className="text-red-500 text-xs italic mt-1"
-                                        />
-                                    </div>
-                                </div>
-
-                                <div className="mb-4 w-1/3">
+                                <div className="mb-4 ">
                                     <label
                                         className="block text-gray-700 text-sm font-bold mb-2"
                                     >
-                                        CVV
+                                        Ano
                                     </label>
                                     <Field
-                                        className={`${errors.security_code && touched.security_code
+                                        className={`${errors.expiration_year && touched.expiration_year
                                             ? 'border-red-500'
                                             : 'border-gray-300'
                                             } shadow appearance-none border rounded-xl w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
-                                        name="security_code"
+                                        name="expiration_year"
                                         type="text"
                                     />
                                     <ErrorMessage
-                                        name="security_code"
+                                        name="expiration_year"
                                         component="div"
                                         className="text-red-500 text-xs italic mt-1"
                                     />
                                 </div>
-                                <div className="flex items-center justify-center h-20 ">
-                                    <button
+                            </div>
+                            <div className="mb-4 w-1/2">
+                                <label
+                                    className="block text-gray-700 text-sm font-bold mb-2"
+                                >
+                                    CVV
+                                </label>
+                                <Field
+                                    className={`${errors.security_code && touched.security_code
+                                        ? 'border-red-500'
+                                        : 'border-gray-300'
+                                        } shadow appearance-none border rounded-xl w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
+                                    name="security_code"
+                                    type="text"
+                                />
+                                <ErrorMessage
+                                    name="security_code"
+                                    component="div"
+                                    className="text-red-500 text-xs italic mt-1"
+                                />
+                            </div>
+                            <div className="flex items-center justify-center h-full">
+                                <button
 
-                                        className="
+                                    className="
                                        bg-green-400
                                        hover:bg-green-600
                                        text-white
                                        transition-all
                                        duration-200
                                        font-bold py-2 px-12 rounded-xl focus:outline-none focus:shadow-outline"
-                                        type="submit"
-                                    >
-                                        Comprar
-                                    </button>
-                                </div>
-                            </Form>
-                        )}
-                    </Formik>
-                </div>
+                                    type="submit"
+                                >
+                                    Comprar
+                                </button>
+                            </div>
+                        </Form>
+                    )}
+                </Formik>
             </div>
         </div >
+
     );
 };
 
