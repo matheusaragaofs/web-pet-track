@@ -428,7 +428,7 @@ const Register = () => {
                 </div>
             </div>
             <div className="w-full hidden md:w-1/2 h-full  sm:block">
-                <img src={'https://source.unsplash.com/random/1080x1280?dog'} className={'h-full w-full'} alt={'cat'} />
+                <img src={'/register.png'} className={'h-full w-full object-cover'} alt={'register'} />
             </div>
         </div >
     )

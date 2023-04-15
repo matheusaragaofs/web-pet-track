@@ -104,7 +104,7 @@ const Login = () => {
                 </div>
             </div>
             <div className="w-full hidden md:w-1/2 rounded-lg h-full sm:block">
-                <img src={'https://source.unsplash.com/random/1080x1280?dog'} className={'h-full w-full'} alt={'cat'} object-cover />
+                <img src={'/login.png'} className={'h-full w-full'} alt={'cat'} object-cover />
             </div>
         </div>
     );
