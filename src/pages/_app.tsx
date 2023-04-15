@@ -16,7 +16,7 @@ const App = ({ Component, pageProps, user, handleLogout }: AppProps) => {
 
   return (
     <Provider store={store}>
-      <div className='d-flex   bg-gradient-to-r   from-[#4505a7] to-[#5312bd]  h-screen items-center justify-center w-full overflow-hidden'>
+      <div className='d-flex    bg-gradient-to-r   from-[#4505a7] to-[#5312bd]  h-screen items-center justify-center w-full overflow-hidden'>
         <HeaderMenu showingOptions={true} handleLogout={handleLogout} user={user}  />
         <Component {...pageProps} user={user} />
       </div>

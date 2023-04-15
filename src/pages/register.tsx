@@ -110,13 +110,13 @@ const Register = () => {
 
     const formikRef = useRef<FormikProps<MyFormValues> | null>(null);
     return (
-        <div className="flex justify-center items-center overflow-hidden h-full">
+        <div className="flex justify-center items-center overflow-hidden h-full bg-white ">
             {/* <span className='absolute left-5 top-10 text-2xl'>
                 <span className="font-bold text-purple-900">confor</span>
                 <span>Track</span>
             </span> */}
-            <div className="flex flex-col md:flex-row w-full md:w-1/2 h-full bg-white   overflow-scroll">
-                <div className="w-full h-full px-8 pt-6 pb-8 mb-4">
+            <div className="flex flex-col md:flex-row w-full md:w-1/2 h-full bg-white mt-10    scrollbar-thin  scrollbar-thumb-[#eeebf7]  scrollbar-track-[#ffffff]  overflow-y-scroll">
+                <div className="w-full h-full px-8 pt-6 pb-8 mb-4 ">
                     <h1 className="text-3xl font-bold mb-6">Criar Conta</h1>
                     <Formik
                         innerRef={formikRef}
@@ -125,7 +125,11 @@ const Register = () => {
                         validationSchema={validationSchema}
                     >
                         {({ errors, touched, values, setFieldValue, handleChange }) => (
-                            <Form>
+                            <Form
+                                style={{
+                                    paddingBottom: '8rem'
+                                }}
+                            >
                                 <div className="mb-4 ">
                                     <label
                                         className="block text-gray-700 text-sm font-bold mb-2"
@@ -415,7 +419,7 @@ const Register = () => {
                                         hover:bg-purple-700 text-purple-800 font-bold py-2 px-12 rounded-3xl focus:outline-none focus:shadow-outline"
                                         type="submit"
                                     >
-                                        Entrar
+                                        Cadastrar
                                     </button>
                                 </div>
                             </Form>

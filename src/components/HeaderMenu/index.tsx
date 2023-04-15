@@ -57,19 +57,45 @@ const HeaderMenu: React.FC<Props> = ({ user, handleLogout }) => {
                         {options?.map(({ title, url }, i) => (
 
                             <span
-                                onClick={() => router.push(`${baseUrl}/${url}`)}
+                                onClick={() => {
+                                    router.push(`${baseUrl}/${url}`)
+                                    setMobileMenuVisible(false)
+                                }}
                                 key={url}
                                 style={{ color: selectedOption === url ? "#4811A2" : 'black' }}
                                 className="block px-2  header-option font-semibold py-5 sm:mt-0 sm:ml-2 border-b border-gray-200">
                                 {title}
                             </span>
                         ))}
+                        {!user &&
+                            <>
+                                <span
+                                    onClick={() => {
+                                        router.push('/login')
+                                        setMobileMenuVisible(false)
+                                    }}
+                                    className="block px-2  header-option  font-semibold py-5 sm:mt-0 sm:ml-2 border-b border-gray-200">
+                                    login
+                                </span>
+                                <span
+                                    onClick={() => {
+                                        router.push('/register')
+                                        setMobileMenuVisible(false)
+                                    }}
+                                    className="block px-2  header-option  font-semibold py-5 sm:mt-0 sm:ml-2 border-b border-gray-200">
+                                    cadastro
+                                </span>
+                            </>
+
+                        }
+
                         <span
-                            className="block px-2   header-option font-semibold py-5 sm:mt-0 sm:ml-2 border-b border-gray-200">
-                            meu perfil
-                        </span>
-                        <span
-                            onClick={handleLogout}
+                            onClick={() => {
+                                handleLogout()
+                                setMobileMenuVisible(false)
+
+                            }
+                            }
                             className="block px-2  header-option  font-semibold py-5 sm:mt-0 sm:ml-2 border-b border-gray-200">
                             sair
                         </span>
@@ -83,17 +109,15 @@ const HeaderMenu: React.FC<Props> = ({ user, handleLogout }) => {
 
             <div className="flex items-center justify-between px-4 py-3 sm:p-0">
                 <div className="flex items-center space-x-10">
-                    <Link href="/">
-                        <span className="text-black text-xl">
-                            <span className="font-bold text-purple-900  ">confor</span>
-                            <span >Track</span>
-                            {/* <img
+                    <span className="text-black text-xl">
+                        <span className="font-bold text-purple-900  ">confor</span>
+                        <span >Track</span>
+                        {/* <img
                                 src="/conforTrack.png"
                                 alt="ConforTrack"
                                 className="h-6"
                             /> */}
-                        </span>
-                    </Link>
+                    </span>
                     {user &&
                         <div className="space-x-1 hidden sm:block" ><span className="font-bold">Olá</span> <span> Matheus Aragão </span></div>
                     }

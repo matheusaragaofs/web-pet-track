@@ -101,7 +101,7 @@ const PurchasePage = () => {
                 <div className="flex justify-evenly items-center flex-col py-10">
                     <h1 className="text-4xl font-bold text-white tex-center p-2">{currentProduct?.name}</h1>
                     <h1 className="text-2xl font-bold text-white tex-center p-2">R${currentProduct?.value},00</h1>
-                    <span className="text-white font-bold text-lg text-center p-2 ">Rastreamento em tempo real</span>
+                    {/* <span className="text-white font-bold text-lg text-center p-2 ">Rastreamento em tempo real</span> */}
                     <span className="text-white font-bold text-2xl  tex-center">{currentProduct?.duration}</span>
                 </div>
                 <Formik

@@ -47,7 +47,7 @@ const MyCollarsPage: React.FC<Props> = ({ user, userName, onLogout, showingOptio
     }
 
     return (
-        <div className=" h-full overflow-scroll pb-32 " >
+        <div className=" h-full overflow-scroll   scrollbar-thin  scrollbar-thumb-[#311c5a] scrollbar-track-[#6524e7]  pb-32 " >
             {modalIsOpen &&
                 <Modal
                     open={modalIsOpen}
@@ -85,7 +85,7 @@ const MyCollarsPage: React.FC<Props> = ({ user, userName, onLogout, showingOptio
                                 rounded-lg relative shadow-md h-56 w-[260px]  hover:shadow-lg transition duration-300"
                             >
                                 <div className="flex justify-center items-center h-2/3">
-                                    <img src={collar.image} alt={collar.name} className="w-32 h-32  object-cover " />
+                                    <img src={'/collar.png'} alt={collar.name} className="w-32 h-32  object-cover " />
                                 </div>
                                 <div
                                     className='

@@ -6,7 +6,7 @@ const products: IProduct[] = [
     {
         id: 1,
         type: 'collar',
-        name: 'Coleira Rastreadora',
+        name: 'Coleira Rastreável',
         description: 'Coleira rastreável composta por  nylon e malha de poliéster, proporcionando mais conforto para o seu pet.',
         value: '300',
     },
@@ -54,7 +54,7 @@ const renderProduct = ({ id, name,  type, description, value }: IProduct) => (
             <h1 className="text-xl lg:text-4xl font-bold text-white text-center">{name}</h1>
             <h1 className="text-xl lg:text-2xl font-bold text-white ">R${value},00</h1>
             <div className="flex justify-center items-center">
-                <img src={'https://source.unsplash.com/random/400x400?dog'} alt={'-'} className="w-32 h-32  object-cover " />
+                <img src={`/${type}.png`} alt={'-'} className="w-36 h-36  object-cover " />
             </div>
         </div>
         <div
@@ -85,8 +85,8 @@ const renderProduct = ({ id, name,  type, description, value }: IProduct) => (
 
 const ProductsPage: React.FC = () => {
     return (
-            <div className="container mx-auto py-4 h-screen   overflow-scroll pb-32  px-5">
-                <h1 className="text-3xl font-bold mb-4 text-white">Produtos</h1>
+            <div className=" mx-auto py-4 h-screen  scrollbar-thin  scrollbar-thumb-[#311c5a] scrollbar-track-[#6524e7]  overflow-scroll pb-32  px-5">
+                <h1 className="text-3xl font-bold mb-10 mt-5 text-white">Produtos</h1>
                 <div className="gap-4 grid grid-cols-1 justify-evenly items-center  w-full">
                     {products.map((product) => renderProduct(product))}
                 </div>

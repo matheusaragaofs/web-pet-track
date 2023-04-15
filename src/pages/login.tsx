@@ -34,7 +34,7 @@ const Login = () => {
 
     return (
         <div className="flex justify-center items-center overflow-hidden h-full">
-            <div className="flex  items-center justify-center w-full md:w-1/2 p-20 ">
+            <div className="flex  items-center justify-center w-full md:w-1/2 p-4 sm:p-16 ">
                 <div className="bg-white w-full p-10 rounded-2xl ">
                     <h1 className="text-3xl font-bold mb-6">Entrar</h1>
                     <Formik

@@ -28,7 +28,7 @@ const plans = [
 
 const PlansPage: React.FC = () => {
     return (
-        <div className="h-screen overflow-scroll pb-32">
+        <div className="h-screen overflow-scroll   scrollbar-thin  scrollbar-thumb-[#311c5a] scrollbar-track-[#6524e7]  pb-32">
             <div className="container mx-auto py-4  px-5">
                 <h1 className="text-3xl font-bold mb-10 mt-5 text-white">Planos</h1>
                 <div className="gap-4 flex justify-evenly items-center flex-wrap  w-full">
