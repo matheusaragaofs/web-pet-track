@@ -3,7 +3,7 @@ import Head from "next/head";
 
 export default function HomePage() {
   return (
-    <div className="bg-white overflow-scroll h-full pb-32 text-[#5F10DF]">
+    <div className="bg-white overflow-scroll  scrollbar-thin  scrollbar-thumb-[#eeebf7]  scrollbar-track-[#ffffff]   h-full pb-32 text-[#5F10DF]">
       <Head>
         <title>Conforto e Segurança - Home Page</title>
       </Head>
@@ -51,7 +51,7 @@ export default function HomePage() {
                 href="#"
                 className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
               >
-                Ver produtos
+                Ver planos
               </a>
             </div>
           </div>
