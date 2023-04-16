@@ -25,8 +25,8 @@ const productsObject = {
         value: 300,
 
     },
-    "battery-3800": {
-        name: 'Bateria 3800mAh',
+    "battery-2200": {
+        name: 'Bateria 2200mAh',
         value: 35,
 
     },

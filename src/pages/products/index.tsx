@@ -12,9 +12,9 @@ const products: IProduct[] = [
     },
     {
         id: 2,
-        type: 'battery-3800',
-        name: 'Bateria 3800mAh',
-        description: 'Bateria recarregável de íon de lítio de 3800mAh.',
+        type: 'battery-2200',
+        name: 'Bateria 2200mAh',
+        description: 'Bateria recarregável de íon de lítio de 2200mAh.',
         value: '35',
     },
     {

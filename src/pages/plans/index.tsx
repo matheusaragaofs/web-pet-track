@@ -43,7 +43,9 @@ const PlansPage: React.FC = () => {
                             >
                                 <div className="flex space-y-5 py-10 items-center flex-col h-2/3 ">
                                     <h1 className="text-4xl font-bold text-white">{plan.name}</h1>
-                                    <h1 className="text-2xl font-bold text-white">R${plan.value},00</h1>
+                                    <h1 className="text-2xl font-bold text-white">
+                                        {plan?.value ? `R$${plan.value},00` : 'Gratuito'}
+                                    </h1>
                                 </div>
                                 <div
                                     className='

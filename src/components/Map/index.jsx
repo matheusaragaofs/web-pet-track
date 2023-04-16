@@ -199,7 +199,7 @@ const MapPage = () => {
 
     if (loadedMap && !_.isEmpty(petLgLat)) {
       map.setCenter(petLgLat)
-      addMarker({ lngLat: petLgLat, map, popupMessage: 'Seu pet está aqui', type: 'pet' })
+      addMarker({ lngLat: petLgLat, map, popupMessage: 'Seu pet está aqui | 97%', type: 'pet' })
     }
 
   }, [petLgLat, loadedMap])
