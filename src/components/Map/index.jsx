@@ -1,6 +1,7 @@
 import { useRef, useEffect, useState } from 'react'
 import * as tt from '@tomtom-international/web-sdk-maps'
 import { FiRefreshCcw } from "react-icons/fi";
+import { useRouter } from 'next/router'
 
 import * as ttapi from '@tomtom-international/web-sdk-services'
 import '@tomtom-international/web-sdk-maps/dist/maps.css'
@@ -14,8 +15,11 @@ import { MdPets } from 'react-icons/md'
 import { toast } from 'react-toastify'
 
 const MapPage = () => {
+  const router = useRouter()
   const [userLngLat, setUserLngLat] = useState(null)
   const [mapMarkers, setMapMarkers] = useState([])
+
+
 
   const getLatLongFromCep = async (cep) => {
     try {
@@ -164,9 +168,19 @@ const MapPage = () => {
       })
   }
 
+  // let hasLogged =false;
+
+  // useEffect(() => {
+  //   setInterval(() => {
+  //     dispatch(fetchCollarsData())
+  //   }, 5000);
+
+  // }, [])
+
 
 
   useEffect(() => {
+
     let map = tt.map({
       key: process.env.NEXT_PUBLIC_REACT_APP_TOM_TOM_API_KEY,
       container: mapElement.current,
@@ -206,60 +220,57 @@ const MapPage = () => {
 
   }, [userLngLat])
   return (
-      <div className='h-2/3 mt-10'>
-        <div className='w-3/4 m-auto d-flex text-right relative' >
-          <Link href='/my-collars' className='flex space-x-8'>
-            <FiArrowLeft color='white' size={22} />
-            <span className='text-white font-bold absolute left-0'> Voltar </span>
-          </Link>
-          <span className='bg-[#E8E8E8] px-10 m-0 py-2 rounded-md text-[#4811A2] font-bold text-lg '> Polly</span>
-        </div>
-        <div className="map-container">
-          <div ref={mapElement} className="map" />
-          <span className='mx-5 my-6 bg-[#E8E8E8] px-10 m-0 py-2 rounded-3xl flex justify-center items-center space-x-5 text-[#4811A2] font-bold text-lg '>
-            <p className='text-center'>
-              minha localização
-            </p>
-            <button onClick={async () => getUserLocation()}>
-              {!userLngLat ? <FiSearch /> : <FiRefreshCcw />}
-            </button>
-            {petLgLat &&
-              <span
-                style={{ justifyContent: userLngLat ? 'space-between' : 'center' }}
-                className=' bg-[#E8E8E8]  py-2 rounded-3xl flex space-x-4 items-center text-[#4811A2] font-bold text-lg '>
-                {userLngLat &&
-                  <button onClick={() => {
-                    map?.removeLayer('route')
-                    map?.removeSource('route')
-                    handleUserMarker()
-                    setUserLngLat(null)
-                    setRouteInfo(null)
-                  }}>
-                    <FiX />
-                  </button>
-                }
-                {userLngLat &&
-                  <button onClick={() => map.setCenter(userLngLat)}>
-                    <FiUser />
-                  </button>
-                }
-                <button onClick={() => map.setCenter(petLgLat)}>
-                  <MdPets />
-                </button>
-              </span>
-            }
+    <div className='h-2/3 '>
+      <div className='bg-white text-right space-x-5 pr-5 flex items-center justify-end m-0 py-2  relative text-[#4811A2] font-bold  text-lg '>
+        <button
+          className='absolute left-10'
+          onClick={async () => router.replace('/my-collars')}>
+          <FiArrowLeft />
+        </button>
+        <div>
+          <span>
+            Polly
           </span>
-
-
-          {!_.isEmpty(routeInfo) &&
-            <span className='bg-[#E8E8E8] p-5 mx-4 rounded-2xl text-[#4811A2] font-bold text-lg  text-center'>
-              <div>Seu pet está há {routeInfo.distance} de você</div>
-              <div>Para chegar até ele levará {routeInfo.travelTime}</div>
+          {routeInfo?.distance &&
+            <span className='ml-1 font-normal'>
+              | {routeInfo.distance}
             </span>
           }
         </div>
+        <button onClick={async () => getUserLocation()}>
+          {!userLngLat ? <FiSearch /> : <FiRefreshCcw />}
+        </button>
 
+        {petLgLat &&
+          <div className='space-x-5 flex items-center justify-center'>
+            {userLngLat &&
+              <button onClick={() => {
+                map?.removeLayer('route')
+                map?.removeSource('route')
+                handleUserMarker()
+                setUserLngLat(null)
+                setRouteInfo(null)
+              }}>
+                <FiX />
+              </button>
+            }
+            {userLngLat &&
+              <button onClick={() => map.setCenter(userLngLat)}>
+                <FiUser />
+              </button>
+            }
+            <button onClick={() => map.setCenter(petLgLat)}>
+              <MdPets />
+            </button>
+          </div>
+        }
       </div>
+
+      <div className="map-container">
+        <div ref={mapElement} className="map " />
+      </div>
+
+    </div>
 
 
 

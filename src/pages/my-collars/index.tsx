@@ -11,7 +11,7 @@ interface Props {
     user?: string
 }
 const collars = [
-    { id: 1, name: 'Collar 1', image: 'https://source.unsplash.com/random/400x400?dog' },
+    { id: 1, name: 'Polly', image: 'https://source.unsplash.com/random/400x400?dog' },
     { id: 2, name: 'Collar 2', image: 'https://source.unsplash.com/random/400x400?cat' },
     { id: 5, name: 'Collar 5', image: 'https://source.unsplash.com/random/400x400?bird' },
     { id: 6, name: 'Collar 6', image: 'https://source.unsplash.com/random/400x400?fish' },
@@ -52,7 +52,7 @@ const MyCollarsPage: React.FC<Props> = ({ user, userName, onLogout, showingOptio
                 <Modal
                     open={modalIsOpen}
                     onClose={closeModal}
-                    styles={{modal: {padding:0}}}
+                    styles={{ modal: { padding: 0 } }}
                     center
 
                 >

@@ -19,6 +19,9 @@ a {
   color: inherit;
   text-decoration: none;
 }
+.mapboxgl-popup-content{
+  text-align: center !important;
+}
 .icon:hover {
   color: #cdb5f4 !important;
   transition: all;
@@ -32,9 +35,8 @@ a {
   cursor: pointer;
 }
 .map-container {
-  height: 100%;
-  height: 75vh;
-  width: 100%;
+  height: 85vh;
+  width:100%;
   display: flex;
   justify-content: center;
   align-items: center;

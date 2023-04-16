@@ -89,12 +89,12 @@ const Register = () => {
     }
 
     const initialValues = {
-        full_name: 'John Doe',
-        email: 'john.doe@example.com',
+        full_name: 'Matheus Aragão',
+        email: 'dev@email.com',
         cep: '12345-678',
-        city: 'New York',
-        address: '123 Main St',
-        neighborhood: 'Downtown',
+        city: 'Recife',
+        address: 'Rua Presidente',
+        neighborhood: 'Imbiribeira',
         complement: 'Apt 5',
         phone: '555-555-1234',
         gender: 'male',
